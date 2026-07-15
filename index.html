@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GiziPrompt - Generator Brosur & Handbook</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0fbf7',
+                            100: '#dcf6ec',
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857',
+                            800: '#065f46',
+                            900: '#064e3b',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col">
+
+    <header class="bg-white border-b border-slate-100 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div class="bg-brand-100 p-2.5 rounded-2xl text-brand-700 shadow-inner">
+                    <i class="fa-solid fa-book-open text-2xl"></i>
+                </div>
+                <div>
+                    <h1 class="font-extrabold text-xl sm:text-2xl text-slate-900 tracking-tight">GiziPrompt <span class="text-brand-600">Pro</span></h1>
+                    <p class="text-xs sm:text-sm text-slate-500 font-medium">Generator 4-Slide Seamless Instagram & A4 Handbook Flyer</p>
+                </div>
+            </div>
+            
+            <div class="flex flex-wrap items-center gap-2">
+                <button onclick="loadPreset('bubur_mata_ikan')" class="px-4 py-2 bg-brand-50 hover:bg-brand-100 text-brand-700 font-semibold rounded-xl text-xs sm:text-sm transition-all flex items-center gap-2 border border-brand-200">
+                    <i class="fa-solid fa-utensils"></i> Preset: Bubur Mata Ikan
+                </button>
+                <button onclick="clearForm()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 font-semibold rounded-xl text-xs sm:text-sm transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-trash-can"></i> Kosongkan
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6 grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        <!-- Left Column: Form Customization -->
+        <div class="lg:col-span-5 flex flex-col gap-6">
+            <div class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden flex-1 flex flex-col">
+                <div class="p-5 border-b border-slate-100 bg-slate-50/50 flex justify-between items-center">
+                    <h2 class="font-bold text-slate-800 flex items-center gap-2">
+                        <i class="fa-solid fa-sliders text-brand-600"></i> Kustomisasi Data Brosur & Handbook
+                    </h2>
+                    <span class="text-xs bg-brand-100 text-brand-800 px-2 py-1 rounded-full font-bold">Auto-Update</span>
+                </div>
+
+                <!-- Form Scrollable Area -->
+                <div class="p-6 overflow-y-auto max-h-[calc(100vh-270px)] custom-scrollbar space-y-6 flex-1">
+                    
+                    <!-- Section 1: Identitas & Lembaga -->
+                    <div class="border-b border-slate-100 pb-5 space-y-4">
+                        <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wider mb-2 flex items-center gap-2">
+                            <span class="w-5 h-5 bg-brand-100 text-brand-700 rounded-md flex items-center justify-center text-xs">1</span>
+                            Identitas & Lembaga
+                        </h3>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Header Utama</label>
+                            <input type="text" id="header_utama" oninput="updatePrompts()" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none text-sm transition-all">
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Nama Lembaga</label>
+                                <input type="text" id="sub_header" oninput="updatePrompts()" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none text-sm transition-all">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Nama Yayasan</label>
+                                <input type="text" id="nama_yayasan" oninput="updatePrompts()" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none text-sm transition-all">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Tanggal Distribusi</label>
+                                <input type="text" id="tanggal_distribusi" oninput="updatePrompts()" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none text-sm transition-all">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Total Penerima</label>
+                                <input type="number" id="total_penerima" oninput="updatePrompts()" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none text-sm transition-all">
+                            </div>
+                        </div>
+
+                        <!-- Optional: Sekolah Dilayani -->
+                        <div class="p-3.5 bg-brand-50/50 rounded-2xl border border-brand-100 transition-all duration-200" id="sekolah_container">
+                            <div class="flex items-center justify-between mb-2">
+                                <label class="block text-xs font-bold text-brand-800 uppercase">Sekolah Dilayani <span class="text-[10px] text-slate-400 font-normal italic">(opsional)</span></label>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" id="sekolah_aktif" onchange="toggleSekolah()" class="sr-only peer" checked>
+                                    <div class="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-brand-600"></div>
+                                </label>
+                            </div>
+                            <div id="sekolah_fields" class="space-y-2">
+                                <input type="number" id="total_sekolah" oninput="updatePrompts()" placeholder="Contoh: 14" class="w-full px-4 py-2 bg-white border border-brand-200 rounded-lg text-sm focus:ring-1 focus:ring-brand-500 outline-none">
+                                <p class="text-[10px] text-slate-400 italic leading-snug">Aktifkan untuk menampilkan data pengantaran harian ke sekolah dasar.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 2: Tema & Menu Utama -->
+                    <div class="border-b border-slate-100 pb-5">
+                        <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wider mb-4 flex items-center gap-2">
+                            <span class="w-5 h-5 bg-brand-100 text-brand-700 rounded-md flex items-center justify-center text-xs">2</span>
+                            Tema & Menu Utama
+                        </h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Nama Menu Utama</label>
+                                <input type="text" id="nama_menu" oninput="updatePrompts()" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none text-sm transition-all">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Tema Desain / Warna</label>
+                                <textarea id="tema_desain" oninput="updatePrompts()" rows="3" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none text-sm transition-all resize-none"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 3: Komposisi B2SA & Detail Manfaat -->
+                    <div class="border-b border-slate-100 pb-5">
+                        <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wider mb-4 flex items-center gap-2">
+                            <span class="w-5 h-5 bg-brand-100 text-brand-700 rounded-md flex items-center justify-center text-xs">3</span>
+                            Komposisi B2SA & Manfaat
+                        </h3>
+                        <div class="space-y-4">
+                            <!-- Karbohidrat -->
+                            <div class="p-3 bg-amber-50/50 rounded-xl border border-amber-100">
+                                <label class="block text-xs font-bold text-amber-800 uppercase mb-1">Karbohidrat (Bahan & Manfaat)</label>
+                                <input type="text" id="b2sa_karbo" oninput="updatePrompts()" placeholder="Nama Bahan" class="w-full px-3 py-1.5 bg-white border border-amber-200 rounded-lg text-sm focus:ring-1 focus:ring-amber-500 outline-none mb-2">
+                                <input type="text" id="manfaat_karbo" oninput="updatePrompts()" placeholder="Detail Manfaat Tumbuh Kembang" class="w-full px-3 py-1.5 bg-white border border-amber-200 rounded-lg text-xs focus:ring-1 focus:ring-amber-500 outline-none">
+                            </div>
+                            <!-- Susu (Optional) -->
+                            <div class="p-3 bg-blue-50/50 rounded-xl border border-blue-100 transition-all duration-200" id="susu_container">
+                                <div class="flex items-center justify-between mb-2">
+                                    <label class="block text-xs font-bold text-blue-800 uppercase">Susu (Bahan & Manfaat) <span class="text-[10px] text-slate-400 font-normal italic">(opsional)</span></label>
+                                    <label class="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" id="susu_aktif" onchange="toggleSusu()" class="sr-only peer" checked>
+                                        <div class="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-600"></div>
+                                    </label>
+                                </div>
+                                <div id="susu_fields" class="space-y-2">
+                                    <input type="text" id="b2sa_susu" oninput="updatePrompts()" placeholder="Nama Bahan Susu" class="w-full px-3 py-1.5 bg-white border border-blue-200 rounded-lg text-sm focus:ring-1 focus:ring-blue-500 outline-none">
+                                    <input type="text" id="manfaat_susu" oninput="updatePrompts()" placeholder="Detail Manfaat Tumbuh Kembang" class="w-full px-3 py-1.5 bg-white border border-blue-200 rounded-lg text-xs focus:ring-1 focus:ring-blue-500 outline-none">
+                                </div>
+                            </div>
+                            <!-- Protein Hewani -->
+                            <div class="p-3 bg-red-50/50 rounded-xl border border-red-100">
+                                <label class="block text-xs font-bold text-red-800 uppercase mb-1">Protein Hewani (Bahan & Manfaat)</label>
+                                <input type="text" id="b2sa_protein" oninput="updatePrompts()" placeholder="Nama Bahan" class="w-full px-3 py-1.5 bg-white border border-red-200 rounded-lg text-sm focus:ring-1 focus:ring-red-500 outline-none mb-2">
+                                <input type="text" id="manfaat_protein" oninput="updatePrompts()" placeholder="Detail Manfaat Tumbuh Kembang" class="w-full px-3 py-1.5 bg-white border border-red-200 rounded-lg text-xs focus:ring-1 focus:ring-red-500 outline-none">
+                            </div>
+                            <!-- Protein Nabati -->
+                            <div class="p-3 bg-orange-50/50 rounded-xl border border-orange-100">
+                                <label class="block text-xs font-bold text-orange-800 uppercase mb-1">Protein Nabati (Bahan & Manfaat)</label>
+                                <input type="text" id="b2sa_protein_nabati" oninput="updatePrompts()" placeholder="Nama Bahan Protein Nabati" class="w-full px-3 py-1.5 bg-white border border-orange-200 rounded-lg text-sm focus:ring-1 focus:ring-orange-500 outline-none mb-2">
+                                <input type="text" id="manfaat_protein_nabati" oninput="updatePrompts()" placeholder="Detail Manfaat Tumbuh Kembang" class="w-full px-3 py-1.5 bg-white border border-orange-200 rounded-lg text-xs focus:ring-1 focus:ring-orange-500 outline-none">
+                            </div>
+                            <!-- Buah -->
+                            <div class="p-3 bg-emerald-50/50 rounded-xl border border-emerald-100">
+                                <label class="block text-xs font-bold text-emerald-800 uppercase mb-1">Buah (Bahan & Manfaat)</label>
+                                <input type="text" id="b2sa_buah" oninput="updatePrompts()" placeholder="Nama Bahan Buah" class="w-full px-3 py-1.5 bg-white border border-emerald-200 rounded-lg text-sm focus:ring-1 focus:ring-emerald-500 outline-none mb-2">
+                                <input type="text" id="manfaat_buah" oninput="updatePrompts()" placeholder="Detail Manfaat Tumbuh Kembang" class="w-full px-3 py-1.5 bg-white border border-emerald-200 rounded-lg text-xs focus:ring-1 focus:ring-emerald-500 outline-none">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 4: Kandungan Gizi -->
+                    <div class="border-b border-slate-100 pb-5">
+                        <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wider mb-4 flex items-center gap-2">
+                            <span class="w-5 h-5 bg-brand-100 text-brand-700 rounded-md flex items-center justify-center text-xs">4</span>
+                            Kandungan Gizi Porsi
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <!-- Porsi Kecil -->
+                            <div class="p-3 bg-slate-50 border border-slate-200 rounded-2xl">
+                                <h4 class="text-xs font-bold text-slate-700 uppercase tracking-wider mb-2 pb-1 border-b border-slate-200">Porsi Kecil</h4>
+                                <div class="space-y-1.5">
+                                    <div class="flex items-center justify-between text-xs font-medium">
+                                        <span>Energi:</span>
+                                        <input type="text" id="pk_energi" oninput="updatePrompts()" class="w-20 px-2 py-0.5 bg-white border border-slate-200 rounded text-right">
+                                    </div>
+                                    <div class="flex items-center justify-between text-xs font-medium">
+                                        <span>Protein (g):</span>
+                                        <input type="text" id="pk_protein" oninput="updatePrompts()" class="w-20 px-2 py-0.5 bg-white border border-slate-200 rounded text-right">
+                                    </div>
+                                    <div class="flex items-center justify-between text-xs font-medium">
+                                        <span>Lemak (g):</span>
+                                        <input type="text" id="pk_lemak" oninput="updatePrompts()" class="w-20 px-2 py-0.5 bg-white border border-slate-200 rounded text-right">
+                                    </div>
+                                    <div class="flex items-center justify-between text-xs font-medium">
+                                        <span>Karbo (g):</span>
+                                        <input type="text" id="pk_karbo" oninput="updatePrompts()" class="w-20 px-2 py-0.5 bg-white border border-slate-200 rounded text-right">
+                                    </div>
+                                    <div class="flex items-center justify-between text-xs font-medium">
+                                        <span>Sayur (g):</span>
+                                        <input type="text" id="pk_sayur" oninput="updatePrompts()" class="w-20 px-2 py-0.5 bg-white border border-slate-200 rounded text-right">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Porsi Besar -->
+                            <div class="p-3 bg-slate-50 border border-slate-200 rounded-2xl">
+                                <h4 class="text-xs font-bold text-slate-700 uppercase tracking-wider mb-2 pb-1 border-b border-slate-200">Porsi Besar</h4>
+                                <div class="space-y-1.5">
+                                    <div class="flex items-center justify-between text-xs font-medium">
+                                        <span>Energi:</span>
+                                        <input type="text" id="pb_energi" oninput="updatePrompts()" class="w-20 px-2 py-0.5 bg-white border border-slate-200 rounded text-right">
+                                    </div>
+                                    <div class="flex items-center justify-between text-xs font-medium">
+                                        <span>Protein (g):</span>
+                                        <input type="text" id="pb_protein" oninput="updatePrompts()" class="w-20 px-2 py-0.5 bg-white border border-slate-200 rounded text-right">
+                                    </div>
+                                    <div class="flex items-center justify-between text-xs font-medium">
+                                        <span>Lemak (g):</span>
+                                        <input type="text" id="pb_lemak" oninput="updatePrompts()" class="w-20 px-2 py-0.5 bg-white border border-slate-200 rounded text-right">
+                                    </div>
+                                    <div class="flex items-center justify-between text-xs font-medium">
+                                        <span>Karbo (g):</span>
+                                        <input type="text" id="pb_karbo" oninput="updatePrompts()" class="w-20 px-2 py-0.5 bg-white border border-slate-200 rounded text-right">
+                                    </div>
+                                    <div class="flex items-center justify-between text-xs font-medium">
+                                        <span>Sayur (g):</span>
+                                        <input type="text" id="pb_sayur" oninput="updatePrompts()" class="w-20 px-2 py-0.5 bg-white border border-slate-200 rounded text-right">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 5: Filosofi Menu -->
+                    <div class="border-b border-slate-100 pb-5">
+                        <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wider mb-4 flex items-center gap-2">
+                            <span class="w-5 h-5 bg-brand-100 text-brand-700 rounded-md flex items-center justify-center text-xs">5</span>
+                            Filosofi Menu
+                        </h3>
+                        <div>
+                            <textarea id="filosofi_menu" oninput="updatePrompts()" rows="3" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none text-sm transition-all resize-none"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Section 6: Detail Foto Menu Asli -->
+                    <div class="pb-2">
+                        <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wider mb-4 flex items-center gap-2">
+                            <span class="w-5 h-5 bg-brand-100 text-brand-700 rounded-md flex items-center justify-center text-xs">6</span>
+                            Detail Tampilan Foto Ompreng (Slide 4 & Handbook)
+                        </h3>
+                        <div>
+                            <textarea id="detail_foto" oninput="updatePrompts()" rows="3" placeholder="Contoh: Disajikan rapi di dalam sekat ompreng (lunch box tray) stainless steel premium. Bubur hangat di sekat utama, lauk telur dan kacang merah teratur di sekat kecil, jeruk segar dan susu sekolah di samping wadah." class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none text-sm transition-all resize-none"></textarea>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column: Outputs & Interactive Carousel Mocks -->
+        <div class="lg:col-span-7 flex flex-col gap-6">
+            
+            <!-- Tab Controls -->
+            <div class="bg-white p-1.5 rounded-2xl border border-slate-200 shadow-sm grid grid-cols-2 sm:grid-cols-5 gap-1.5">
+                <button onclick="switchTab(1)" id="tab-btn-1" class="py-3 text-[10px] sm:text-xs font-bold rounded-xl transition-all flex flex-col sm:flex-row items-center justify-center gap-1.5 text-brand-700 bg-brand-50">
+                    <span class="w-5 h-5 bg-brand-600 text-white rounded-full flex items-center justify-center text-[10px]">1</span> Identitas
+                </button>
+                <button onclick="switchTab(2)" id="tab-btn-2" class="py-3 text-[10px] sm:text-xs font-bold rounded-xl transition-all flex flex-col sm:flex-row items-center justify-center gap-1.5 text-slate-500 hover:bg-slate-50">
+                    <span class="w-5 h-5 bg-slate-200 text-slate-600 rounded-full flex items-center justify-center text-[10px]">2</span> B2SA
+                </button>
+                <button onclick="switchTab(3)" id="tab-btn-3" class="py-3 text-[10px] sm:text-xs font-bold rounded-xl transition-all flex flex-col sm:flex-row items-center justify-center gap-1.5 text-slate-500 hover:bg-slate-50">
+                    <span class="w-5 h-5 bg-slate-200 text-slate-600 rounded-full flex items-center justify-center text-[10px]">3</span> Gizi
+                </button>
+                <button onclick="switchTab(4)" id="tab-btn-4" class="py-3 text-[10px] sm:text-xs font-bold rounded-xl transition-all flex flex-col sm:flex-row items-center justify-center gap-1.5 text-slate-500 hover:bg-slate-50">
+                    <span class="w-5 h-5 bg-slate-200 text-slate-600 rounded-full flex items-center justify-center text-[10px]">4</span> Foto Asli
+                </button>
+                <button onclick="switchTab(5)" id="tab-btn-5" class="col-span-2 sm:col-span-1 py-3 text-[10px] sm:text-xs font-bold rounded-xl transition-all flex flex-col sm:flex-row items-center justify-center gap-1.5 text-slate-500 hover:bg-slate-50">
+                    <span class="w-5 h-5 bg-slate-200 text-slate-600 rounded-full flex items-center justify-center text-[10px]">5</span> A4 Handbook
+                </button>
+            </div>
+
+            <!-- Visualizer Card Area -->
+            <div class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden flex flex-col flex-1">
+                <div class="p-5 border-b border-slate-100 bg-slate-50/50 flex justify-between items-center flex-wrap gap-2">
+                    <span id="canvas-aspect-title" class="text-xs font-bold text-slate-400 tracking-wider uppercase">Visualisasi Tata Letak Instagram (1:1)</span>
+                    <button onclick="copyCurrentPrompt()" class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-2 shadow-sm shadow-brand-200">
+                        <i class="fa-solid fa-copy"></i> Salin Prompt Slide <span id="current-slide-num">1</span>
+                    </button>
+                </div>
+
+                <!-- Live Slide Preview Simulated Area -->
+                <div class="p-6 flex flex-col items-center justify-center bg-slate-100/50 flex-1 min-h-[440px]">
+                    
+                    <!-- Simulated Instagram Canvas Frame (Aspect changes dynamically) -->
+                    <div id="slide-visual-container" class="w-full max-w-[380px] aspect-square bg-slate-900 rounded-2xl relative shadow-xl overflow-hidden transition-all duration-300 transform border-4 border-white">
+                        
+                        <!-- Common background overlay -->
+                        <div class="absolute inset-0 opacity-15 pointer-events-none mix-blend-overlay bg-gradient-to-b from-transparent to-slate-950">
+                            <div class="absolute w-64 h-64 bg-emerald-300 rounded-full -top-10 -left-10 filter blur-2xl"></div>
+                            <div class="absolute w-64 h-64 bg-amber-400 rounded-full -bottom-10 -right-10 filter blur-3xl"></div>
+                        </div>
+
+                        <!-- SLIDE 1 PREVIEW CONTENT -->
+                        <div id="visual-slide-1" class="absolute inset-0 p-6 flex flex-col justify-between text-white z-10">
+                            <div class="flex items-start justify-between w-full">
+                                <div class="flex items-start gap-2">
+                                    <div class="w-7 h-7 bg-brand-500 rounded-lg flex items-center justify-center text-[10px] font-bold text-white shadow-md">BGN</div>
+                                    <div class="text-[9px] uppercase tracking-wider font-extrabold leading-none">Badan Gizi<br><span class="text-emerald-400">Nasional</span></div>
+                                </div>
+                                <div id="prev-sekolah-badge" class="bg-amber-500/20 text-amber-300 px-2 py-1 rounded text-[8px] font-bold uppercase tracking-wider border border-amber-500/40 hidden">
+                                    <i class="fa-solid fa-school mr-1"></i> <span id="prev-sekolah-val">14</span> Sekolah
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-12 gap-3 flex-1 items-center mt-3">
+                                <div class="col-span-7 pr-1">
+                                    <span class="text-[8px] bg-emerald-600/60 text-emerald-300 px-1.5 py-0.5 rounded font-bold uppercase tracking-wider mb-1 inline-block">Program Gratis</span>
+                                    <h4 id="prev-header" class="text-xs font-extrabold text-white leading-tight uppercase mb-1">MENU MAKAN GRATIS BERGIZI</h4>
+                                    <p id="prev-sub" class="text-[9px] font-bold text-brand-300 uppercase truncate">SPPG PANGKALAN MANSYUR III</p>
+                                    <p id="prev-yayasan" class="text-[8px] opacity-70 italic truncate font-semibold">YAYASAN ATIFA MAJU MANDIRI</p>
+                                </div>
+                                <div class="col-span-5 aspect-square bg-slate-800 rounded-xl relative flex items-center justify-center border border-slate-700 overflow-hidden shadow-inner group">
+                                    <div class="absolute inset-0 bg-gradient-to-tr from-slate-950/80 to-transparent z-10"></div>
+                                    <span class="text-[9px] text-slate-400 font-extrabold uppercase tracking-widest text-center px-1 z-20"><i class="fa-solid fa-camera text-slate-500 text-lg mb-1 block"></i>FOTO MENU</span>
+                                </div>
+                            </div>
+
+                            <div class="border-t border-slate-800/80 pt-2 flex justify-between items-center text-[8px] tracking-wide font-medium">
+                                <div class="opacity-80"><i class="fa-solid fa-calendar-day text-brand-400 mr-1"></i><span id="prev-tanggal">JUMAT 12 JUNI 2026</span></div>
+                                <div class="bg-brand-900/80 text-brand-200 px-2 py-0.5 rounded border border-brand-800"><i class="fa-solid fa-users mr-1"></i>Penerima: <span id="prev-total" class="font-bold">1774</span></div>
+                            </div>
+                        </div>
+
+                        <!-- SLIDE 2 PREVIEW CONTENT -->
+                        <div id="visual-slide-2" class="absolute inset-0 p-6 flex flex-col justify-between text-white z-10 hidden">
+                            <div class="flex justify-between items-center border-b border-slate-800/80 pb-2">
+                                <span class="text-[8px] font-bold text-brand-400 uppercase tracking-widest">KOMPOSISI B2SA</span>
+                                <span class="text-[8px] opacity-50 font-bold">SLIDE 2 / 4</span>
+                            </div>
+
+                            <div class="grid grid-cols-12 gap-3 flex-1 items-center my-2">
+                                <div class="col-span-8 space-y-1.5 max-h-[180px] overflow-y-auto custom-scrollbar pr-1">
+                                    <div class="flex items-start gap-1.5">
+                                        <span class="w-4 h-4 bg-amber-500/20 text-amber-400 rounded flex items-center justify-center text-[8px] font-bold shrink-0 mt-0.5">K</span>
+                                        <div>
+                                            <p class="text-[9px] font-bold text-slate-200 leading-none" id="prev-b2sa-karbo">Bubur Mata Ikan</p>
+                                            <p class="text-[7px] text-slate-400 truncate max-w-[140px]" id="prev-manfaat-karbo">Energi instan untuk tumbuh kembang anak</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start gap-1.5" id="prev-susu-container">
+                                        <span class="w-4 h-4 bg-blue-500/20 text-blue-400 rounded flex items-center justify-center text-[8px] font-bold shrink-0 mt-0.5">S</span>
+                                        <div>
+                                            <p class="text-[9px] font-bold text-slate-200 leading-none" id="prev-b2sa-susu">Susu Sekolah</p>
+                                            <p class="text-[7px] text-slate-400 truncate max-w-[140px]" id="prev-manfaat-susu">Kalsium pertumbuhan tulang</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start gap-1.5">
+                                        <span class="w-4 h-4 bg-red-500/20 text-red-400 rounded flex items-center justify-center text-[8px] font-bold shrink-0 mt-0.5">PH</span>
+                                        <div>
+                                            <p class="text-[9px] font-bold text-slate-200 leading-none" id="prev-b2sa-protein">Telur Ayam</p>
+                                            <p class="text-[7px] text-slate-400 truncate max-w-[140px]" id="prev-manfaat-protein">Protein otot dan kognitif</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start gap-1.5">
+                                        <span class="w-4 h-4 bg-orange-500/20 text-orange-400 rounded flex items-center justify-center text-[8px] font-bold shrink-0 mt-0.5">PN</span>
+                                        <div>
+                                            <p class="text-[9px] font-bold text-slate-200 leading-none" id="prev-b2sa-protein-nabati">Kacang Merah</p>
+                                            <p class="text-[7px] text-slate-400 truncate max-w-[140px]" id="prev-manfaat-protein-nabati">Protein nabati penunjang imun</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start gap-1.5">
+                                        <span class="w-4 h-4 bg-emerald-500/20 text-emerald-400 rounded flex items-center justify-center text-[8px] font-bold shrink-0 mt-0.5">B</span>
+                                        <div>
+                                            <p class="text-[9px] font-bold text-slate-200 leading-none" id="prev-b2sa-buah">Buah Jeruk</p>
+                                            <p class="text-[7px] text-slate-400 truncate max-w-[140px]" id="prev-manfaat-buah">Vitamin C kekebalan tubuh</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-span-4 aspect-square bg-slate-800 rounded-xl relative flex items-center justify-center border border-slate-700 overflow-hidden shadow-inner opacity-60">
+                                    <span class="text-[7px] text-slate-500 font-bold uppercase text-center px-1">INFOGRAFIS INTERAKTIF</span>
+                                </div>
+                            </div>
+
+                            <div class="text-[8px] opacity-70 text-center italic border-t border-slate-800/50 pt-2 truncate">
+                                * Beragam, Bergizi, Seimbang, dan Aman (B2SA)
+                            </div>
+                        </div>
+
+                        <!-- SLIDE 3 PREVIEW CONTENT -->
+                        <div id="visual-slide-3" class="absolute inset-0 p-6 flex flex-col justify-between text-white z-10 hidden">
+                            <div class="flex justify-between items-center border-b border-slate-800/80 pb-2">
+                                <span class="text-[8px] font-bold text-emerald-400 uppercase tracking-widest">INFORMASI NILAI GIZI</span>
+                                <span class="text-[8px] opacity-50 font-bold">SLIDE 3 / 4</span>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-3 my-2">
+                                <div class="bg-slate-800/50 border border-slate-700/50 p-2 rounded-xl">
+                                    <h5 class="text-[9px] font-bold text-emerald-300 border-b border-slate-700 pb-1 mb-1.5 flex justify-between">
+                                        <span>PORSI KECIL</span>
+                                        <i class="fa-solid fa-child"></i>
+                                    </h5>
+                                    <div class="space-y-1 text-[8px]">
+                                        <div class="flex justify-between"><span>Energi:</span><span class="font-bold" id="prev-pk-energi">241.9</span></div>
+                                        <div class="flex justify-between"><span>Protein:</span><span class="font-bold" id="prev-pk-protein">10.4g</span></div>
+                                        <div class="flex justify-between"><span>Lemak:</span><span class="font-bold" id="prev-pk-lemak">10.3g</span></div>
+                                        <div class="flex justify-between"><span>Karbo:</span><span class="font-bold" id="prev-pk-karbo">29.3g</span></div>
+                                        <div class="flex justify-between"><span>Sayur:</span><span class="font-bold" id="prev-pk-sayur">0.3g</span></div>
+                                    </div>
+                                </div>
+                                <div class="bg-slate-800/50 border border-slate-700/50 p-2 rounded-xl">
+                                    <h5 class="text-[9px] font-bold text-amber-300 border-b border-slate-700 pb-1 mb-1.5 flex justify-between">
+                                        <span>PORSI BESAR</span>
+                                        <i class="fa-solid fa-person"></i>
+                                    </h5>
+                                    <div class="space-y-1 text-[8px]">
+                                        <div class="flex justify-between"><span>Energi:</span><span class="font-bold" id="prev-pb-energi">315.8</span></div>
+                                        <div class="flex justify-between"><span>Protein:</span><span class="font-bold" id="prev-pb-protein">11g</span></div>
+                                        <div class="flex justify-between"><span>Lemak:</span><span class="font-bold" id="prev-pb-lemak">11g</span></div>
+                                        <div class="flex justify-between"><span>Karbo:</span><span class="font-bold" id="prev-pb-karbo">36.6g</span></div>
+                                        <div class="flex justify-between"><span>Sayur:</span><span class="font-bold" id="prev-pb-sayur">0.5g</span></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="border-t border-slate-800/80 pt-2 text-[7px] leading-relaxed italic text-slate-300">
+                                <span class="font-bold text-slate-200">Filosofi Menu:</span>
+                                <span id="prev-filosofi">"Perpaduan bahan lokal yang melambangkan kekuatan, kebersamaan..."</span>
+                            </div>
+                        </div>
+
+                        <!-- SLIDE 4 PREVIEW CONTENT -->
+                        <div id="visual-slide-4" class="absolute inset-0 p-6 flex flex-col justify-between text-white z-10 hidden">
+                            <div class="flex justify-between items-center border-b border-slate-800/80 pb-2">
+                                <span class="text-[8px] font-bold text-emerald-400 uppercase tracking-widest">REAL FOOD IN OMPRENG (4:3)</span>
+                                <span class="text-[8px] opacity-50 font-bold">SLIDE 4 / 4</span>
+                            </div>
+
+                            <div class="flex-1 flex flex-col items-center justify-center my-2 relative">
+                                <div class="w-[90%] aspect-[4/3] bg-slate-800 border-2 border-slate-700 rounded-xl p-2.5 flex flex-col justify-between shadow-2xl relative overflow-hidden">
+                                    <div class="absolute inset-0 bg-slate-900/30 pointer-events-none"></div>
+                                    <div class="grid grid-cols-12 gap-1.5 h-[80%]">
+                                        <div class="col-span-7 bg-slate-950/70 rounded-lg p-2 border border-slate-700/50 flex flex-col justify-center items-center">
+                                            <i class="fa-solid fa-bowl-rice text-brand-400 text-base mb-1"></i>
+                                            <span class="text-[8px] font-bold text-center text-slate-100 block truncate w-full" id="prev-slide4-menu">BUBUR MATA IKAN</span>
+                                            <span class="text-[6px] text-slate-400 uppercase font-medium">Sekat Utama</span>
+                                        </div>
+                                        <div class="col-span-5 flex flex-col gap-1.5">
+                                            <div class="h-1/2 bg-slate-950/70 rounded-lg p-1 border border-slate-700/50 flex flex-col justify-center items-center text-center">
+                                                <i class="fa-solid fa-egg text-amber-400 text-[10px] mb-0.5"></i>
+                                                <span class="text-[6px] text-slate-200 font-bold truncate w-full text-center" id="prev-slide4-protein">Telur & Nabati</span>
+                                            </div>
+                                            <div class="h-1/2 bg-slate-950/70 rounded-lg p-1 border border-slate-700/50 flex flex-col justify-center items-center text-center">
+                                                <i class="fa-solid fa-apple-whole text-emerald-400 text-[10px] mb-0.5"></i>
+                                                <span class="text-[6px] text-slate-200 font-bold truncate w-full text-center" id="prev-slide4-buah">Jeruk Manis</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="h-[18%] bg-slate-900/80 rounded-lg px-2 flex items-center justify-between border border-slate-700/30" id="prev-slide4-susu-tray">
+                                        <span class="text-[6px] font-bold text-brand-300 uppercase tracking-wider"><i class="fa-solid fa-bottle-droplet mr-1 text-[8px]"></i>Susu Sekolah</span>
+                                        <span class="text-[6px] text-slate-400">Higienis & Rapi</span>
+                                    </div>
+                                </div>
+                                <p class="text-[7px] text-slate-400 mt-2 text-center leading-snug line-clamp-2 italic px-3" id="prev-slide4-detail">"Disajikan rapi di dalam sekat ompreng stainless steel..."</p>
+                            </div>
+
+                            <div class="border-t border-slate-800/80 pt-2 flex justify-between items-center text-[8px] text-slate-400 font-medium">
+                                <span>#MakanGratisBergizi</span>
+                                <span class="bg-brand-900/80 text-brand-300 px-1.5 py-0.5 rounded border border-brand-800 text-[7px] uppercase tracking-wider font-bold">Ompreng Stainless 100% Higienis</span>
+                            </div>
+                        </div>
+
+                        <!-- SLIDE 5 PREVIEW CONTENT (A4 HANDBOOK) -->
+                        <div id="visual-slide-5" class="absolute inset-0 p-5 flex flex-col justify-between text-white z-10 hidden text-[7px]">
+                            <!-- Top Header of A4 Handout -->
+                            <div class="flex items-center justify-between border-b border-slate-800/90 pb-2 mb-1.5">
+                                <div class="flex items-center gap-1.5">
+                                    <div class="w-5 h-5 bg-brand-500 rounded flex items-center justify-center text-[7px] font-bold text-white shadow-sm">BGN</div>
+                                    <div class="text-[7px] uppercase tracking-wider font-extrabold leading-none">Panduan Resmi<br><span class="text-emerald-400">Badan Gizi Nasional</span></div>
+                                </div>
+                                <div class="bg-emerald-600/30 border border-emerald-500/30 px-1.5 py-0.5 rounded text-[6px] font-bold text-emerald-300 uppercase">
+                                    DOKUMEN HANDBOOK A4
+                                </div>
+                            </div>
+
+                            <!-- Title Box -->
+                            <div class="text-center bg-slate-900/90 py-1.5 px-2 rounded-lg border border-slate-800/70 mb-2">
+                                <h4 id="prev5-header" class="text-[9px] font-extrabold text-white tracking-wide uppercase leading-tight">MENU MAKAN GRATIS BERGIZI</h4>
+                                <div class="flex justify-center items-center gap-2 text-[6px] text-slate-400 mt-0.5 font-medium">
+                                    <span id="prev5-sub">SPPG PANGKALAN MANSYUR III</span>
+                                    <span>•</span>
+                                    <span id="prev5-tanggal">JUMAT 12 JUNI 2026</span>
+                                </div>
+                            </div>
+
+                            <!-- Split Content: Left Information, Right Graphics preview -->
+                            <div class="grid grid-cols-12 gap-2 flex-1 items-stretch mb-2 overflow-hidden">
+                                <!-- Left Column: B2SA & Nutrisi -->
+                                <div class="col-span-7 flex flex-col justify-between bg-slate-950/40 p-2 rounded-lg border border-slate-900/60 overflow-hidden space-y-2">
+                                    <!-- B2SA Mini List -->
+                                    <div>
+                                        <h5 class="text-[7px] font-bold text-emerald-400 uppercase tracking-wider border-b border-slate-900/50 pb-0.5 mb-1 flex items-center gap-1">
+                                            <i class="fa-solid fa-heart-pulse"></i> Komposisi B2SA
+                                        </h5>
+                                        <div class="space-y-0.5 text-[6px] text-slate-300">
+                                            <p class="truncate"><span class="font-bold text-amber-300">K:</span> <span id="prev5-b2sa-karbo">Bubur Mata Ikan</span></p>
+                                            <p class="truncate" id="prev5-susu-container"><span class="font-bold text-blue-300">S:</span> <span id="prev5-b2sa-susu">Susu Sekolah</span></p>
+                                            <p class="truncate"><span class="font-bold text-red-300">PH:</span> <span id="prev5-b2sa-protein">Telur Ayam</span></p>
+                                            <p class="truncate"><span class="font-bold text-orange-300">PN:</span> <span id="prev5-b2sa-protein-nabati">Kacang Merah</span></p>
+                                            <p class="truncate"><span class="font-bold text-emerald-300">B:</span> <span id="prev5-b2sa-buah">Buah Jeruk</span></p>
+                                        </div>
+                                    </div>
+
+                                    <!-- Nutrition Data Sheet -->
+                                    <div class="space-y-1">
+                                        <h5 class="text-[7px] font-bold text-amber-400 uppercase tracking-wider border-b border-slate-900/50 pb-0.5 flex items-center gap-1">
+                                            <i class="fa-solid fa-chart-simple"></i> Nilai Gizi (Kecil / Besar)
+                                        </h5>
+                                        <table class="w-full text-[5.5px] border-collapse text-slate-300">
+                                            <thead>
+                                                <tr class="border-b border-slate-900 text-slate-400">
+                                                    <th class="text-left font-bold py-0.5">Zat Gizi</th>
+                                                    <th class="text-right font-bold py-0.5">P. Kecil</th>
+                                                    <th class="text-right font-bold py-0.5">P. Besar</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr class="border-b border-slate-900/30">
+                                                    <td class="py-0.5">Energi</td>
+                                                    <td class="text-right font-bold text-emerald-400" id="prev5-pk-energi">241.9</td>
+                                                    <td class="text-right font-bold text-amber-400" id="prev5-pb-energi">315.8</td>
+                                                </tr>
+                                                <tr class="border-b border-slate-900/30">
+                                                    <td class="py-0.5">Protein (g)</td>
+                                                    <td class="text-right font-bold" id="prev5-pk-protein">10.4</td>
+                                                    <td class="text-right font-bold" id="prev5-pb-protein">11</td>
+                                                </tr>
+                                                <tr class="border-b border-slate-900/30">
+                                                    <td class="py-0.5">Lemak (g)</td>
+                                                    <td class="text-right" id="prev5-pk-lemak">10.3</td>
+                                                    <td class="text-right" id="prev5-pb-lemak">11</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="py-0.5">Sayur (g)</td>
+                                                    <td class="text-right" id="prev5-pk-sayur">0.3</td>
+                                                    <td class="text-right" id="prev5-pb-sayur">0.5</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <!-- Right Column: Visual Showcase -->
+                                <div class="col-span-5 flex flex-col justify-between space-y-1.5">
+                                    <!-- Photo Ompreng Slot -->
+                                    <div class="flex-1 bg-slate-950/70 border border-slate-800/80 rounded-lg p-1.5 flex flex-col justify-center items-center text-center relative overflow-hidden">
+                                        <i class="fa-solid fa-plate-wheat text-brand-400 text-sm mb-1"></i>
+                                        <span class="text-[6.5px] font-bold text-white block leading-tight uppercase" id="prev5-menu">Bubur Mata Ikan</span>
+                                        <span class="text-[5px] text-slate-500 uppercase tracking-wider mt-0.5">Penyajian Dalam Ompreng</span>
+                                    </div>
+                                    <!-- Stat box -->
+                                    <div class="bg-brand-950/60 border border-brand-900/50 rounded-lg p-1.5 text-center flex flex-col justify-center">
+                                        <span class="text-[5px] text-brand-300 font-bold uppercase tracking-wider">Total Penerima</span>
+                                        <span class="text-[10px] font-extrabold text-white leading-none mt-0.5" id="prev5-total">1774</span>
+                                        <span class="text-[5px] text-slate-400 mt-0.5" id="prev5-yayasan">Yayasan Atifa Mandiri</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Bottom Area: Philosophy of Menu -->
+                            <div class="border-t border-slate-800/90 pt-1.5 bg-slate-950/30 p-2 rounded-lg border border-slate-900/40">
+                                <h5 class="text-[6px] font-bold text-amber-500 uppercase tracking-widest mb-0.5">Filosofi Sajian Hari Ini</h5>
+                                <p class="text-[5.5px] text-slate-300 leading-snug italic" id="prev5-filosofi">"Perpaduan bahan lokal yang melambangkan kekuatan..."</p>
+                            </div>
+
+                            <!-- Footer block -->
+                            <div class="border-t border-slate-900/80 pt-1.5 flex justify-between items-center text-[5.5px] text-slate-500 font-medium mt-1">
+                                <span>Badan Gizi Nasional • Handbook V1</span>
+                                <span id="prev5-sekolah-val" class="font-bold">14 Sekolah Dilayani</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Copyable Prompt Area -->
+                <div class="p-5 border-t border-slate-100 bg-slate-50/50 flex flex-col gap-3">
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Hasil Prompt Generator</span>
+                        <button onclick="copyToClipboard('prompt-area-text')" class="text-xs text-brand-700 hover:text-brand-800 font-bold flex items-center gap-1.5">
+                            <i class="fa-solid fa-copy"></i> Salin Teks
+                        </button>
+                    </div>
+                    <div class="relative">
+                        <textarea id="prompt-area-text" readonly class="w-full h-32 p-4 bg-white border border-slate-200 rounded-2xl text-xs font-mono text-slate-700 focus:outline-none resize-none custom-scrollbar shadow-inner"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Global Action Panel -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <button onclick="copyAllPrompts()" class="py-3 px-4 bg-brand-700 hover:bg-brand-800 text-white rounded-2xl font-bold text-sm transition-all flex items-center justify-center gap-2 shadow-lg shadow-brand-200">
+                    <i class="fa-solid fa-copy"></i> Salin Semua 5 Prompt
+                </button>
+                <button onclick="downloadPrompts()" class="py-3 px-4 bg-slate-800 hover:bg-slate-900 text-white rounded-2xl font-bold text-sm transition-all flex items-center justify-center gap-2 shadow-lg shadow-slate-200">
+                    <i class="fa-solid fa-file-arrow-down"></i> Unduh File Teks (.txt)
+                </button>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-slate-900 text-white px-5 py-3 rounded-2xl shadow-xl border border-slate-800 text-sm font-semibold flex items-center gap-3 transform translate-y-10 opacity-0 pointer-events-none transition-all duration-300">
+        <div class="w-6 h-6 rounded-full bg-brand-500 flex items-center justify-center text-white text-xs">
+            <i class="fa-solid fa-check"></i>
+        </div>
+        <span id="toast-message">Teks berhasil disalin ke clipboard!</span>
+    </div>
+
+    <!-- Footnote details -->
+    <footer class="bg-white border-t border-slate-100 py-4 mt-8">
+        <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-400 font-medium">
+            GiziPrompt Pro © 2026 • Program Makan Gratis Bergizi • Yayasan Atifa Maju Mandiri
+        </div>
+    </footer>
+
+    <!-- Application Logic Script -->
+    <script>
+        // Helper function to get today's date formatted in uppercase Indonesian
+        function getFormattedDateToday() {
+            const days = ["MINGGU", "SENIN", "SELASA", "RABU", "KAMIS", "JUMAT", "SABTU"];
+            const months = ["JANUARI", "FEBRUARI", "MARET", "APRIL", "MEI", "JUNI", "JULI", "AGUSTUS", "SEPTEMBER", "OKTOBER", "NOVEMBER", "DESEMBER"];
+            const today = new Date();
+            const dayName = days[today.getDay()];
+            const dateNum = today.getDate();
+            const monthName = months[today.getMonth()];
+            const year = today.getFullYear();
+            return `${dayName} ${dateNum} ${monthName} ${year}`;
+        }
+
+        // Preset data configuration (Fully customized with B2SA & 5-Slide details)
+        const presets = {
+            bubur_mata_ikan: {
+                header_utama: "MENU MAKAN GRATIS BERGIZI",
+                sub_header: "SPPG PANGKALAN MANSYUR III",
+                nama_yayasan: "YAYASAN ATIFA MAJU MANDIRI",
+                tanggal_distribusi: "JUMAT 12 JUNI 2026",
+                total_penerima: 1774,
+                sekolah_aktif: true,
+                total_sekolah: 14,
+                nama_menu: "Bubur Mata Ikan",
+                tema_desain: "Masakan Bubur Mata Ikan. Pola abstrak menggabungkan bentuk 'mata ikan' (biji mutiara/sagu), tekstur bubur lembut, dan kombinasi warna krem, kuning keemasan, hijau toska, serta aksen biru navy.",
+                b2sa_karbo: "Bubur Mata Ikan",
+                manfaat_karbo: "Energi instan untuk tumbuh kembang anak",
+                susu_aktif: true,
+                b2sa_susu: "Susu Sekolah",
+                manfaat_susu: "Kalsium memperkuat kepadatan tulang & pertumbuhan tinggi",
+                b2sa_protein: "Telur Ayam",
+                manfaat_protein: "Asam amino esensial pembangun otot dan fungsi kognitif",
+                b2sa_protein_nabati: "Kacang Merah",
+                manfaat_protein_nabati: "Protein nabati penunjang metabolisme & imun",
+                b2sa_buah: "Buah Jeruk",
+                manfaat_buah: "Kandungan Vitamin C menjaga sistem imunitas tubuh",
+                pk_energi: "241.9",
+                pk_protein: "10.4",
+                pk_lemak: "10.3",
+                pk_karbo: "29.3",
+                pk_sayur: "0.3",
+                pb_energi: "315.8",
+                pb_protein: "11",
+                pb_lemak: "11",
+                pb_karbo: "36.6",
+                pb_sayur: "0.5",
+                filosofi_menu: "Perpaduan bahan lokal yang melambangkan kekuatan, kebersamaan, dan energi untuk generasi masa depan yang cerdas dan sehat.",
+                detail_foto: "Disajikan hangat di dalam sekat ompreng (divided lunch tray) berbahan stainless steel premium yang sangat bersih dan steril. Porsi makanan terbagi rapi dan padat di setiap kompartemen: bubur hangat di kompartemen utama, telur ayam rebus terbelah rapi di sekat lauk, kacang merah dan garnish daun pandan segar di atasnya, sayur sup hangat di sekat tersendiri, serta satu kotak susu sekolah dan buah jeruk manis diletakkan presisi di samping ompreng. Diambil dari sudut pandang datar (flatlay top-down) 45 derajat dengan pencahayaan studio yang cerah, tajam, profesional, dan menonjolkan tekstur segar masakan harian asli."
+            }
+        };
+
+        // Active State
+        let activeTab = 1;
+        let prompts = { 1: '', 2: '', 3: '', 4: '', 5: '' };
+
+        // Handle Susu optional toggle rendering
+        function toggleSusu() {
+            const isSusuActive = document.getElementById('susu_aktif').checked;
+            const susuFields = document.getElementById('susu_fields');
+            
+            const prevSusuContainer = document.getElementById('prev-susu-container');
+            const prev5SusuContainer = document.getElementById('prev5-susu-container');
+            const prevSlide4Susu = document.getElementById('prev-slide4-susu-tray');
+            
+            if (isSusuActive) {
+                susuFields.classList.remove('opacity-40', 'pointer-events-none');
+                if (prevSusuContainer) prevSusuContainer.classList.remove('hidden');
+                if (prev5SusuContainer) prev5SusuContainer.classList.remove('hidden');
+                if (prevSlide4Susu) prevSlide4Susu.classList.remove('hidden');
+            } else {
+                susuFields.classList.add('opacity-40', 'pointer-events-none');
+                if (prevSusuContainer) prevSusuContainer.classList.add('hidden');
+                if (prev5SusuContainer) prev5SusuContainer.classList.add('hidden');
+                if (prevSlide4Susu) prevSlide4Susu.classList.add('hidden');
+            }
+            updatePrompts();
+        }
+
+        // Handle Sekolah optional toggle rendering
+        function toggleSekolah() {
+            const isSekolahActive = document.getElementById('sekolah_aktif').checked;
+            const sekolahFields = document.getElementById('sekolah_fields');
+            const prevSekolahBadge = document.getElementById('prev-sekolah-badge');
+            
+            if (isSekolahActive) {
+                sekolahFields.classList.remove('opacity-40', 'pointer-events-none');
+                if (prevSekolahBadge) prevSekolahBadge.classList.remove('hidden');
+            } else {
+                sekolahFields.classList.add('opacity-40', 'pointer-events-none');
+                if (prevSekolahBadge) prevSekolahBadge.classList.add('hidden');
+            }
+            updatePrompts();
+        }
+
+        // Populate inputs with preset values
+        function loadPreset(presetKey) {
+            const data = presets[presetKey];
+            if (!data) return;
+
+            Object.keys(data).forEach(id => {
+                const elem = document.getElementById(id);
+                if (elem) {
+                    if (elem.type === 'checkbox') {
+                        elem.checked = data[id];
+                    } else {
+                        elem.value = data[id];
+                    }
+                }
+            });
+
+            toggleSusu();
+            toggleSekolah();
+            showToast("Berhasil memuat preset: " + data.nama_menu);
+        }
+
+        // Empty the form values
+        function clearForm() {
+            const inputs = document.querySelectorAll('input, textarea');
+            inputs.forEach(input => {
+                if (input.type === 'checkbox') {
+                    input.checked = false;
+                } else {
+                    input.value = '';
+                }
+            });
+            toggleSusu();
+            toggleSekolah();
+            showToast("Formulir berhasil dikosongkan.");
+        }
+
+        // Switch preview slide tabs
+        function switchTab(tabNum) {
+            activeTab = tabNum;
+            const visualizerContainer = document.getElementById('slide-visual-container');
+            const titleElement = document.getElementById('canvas-aspect-title');
+            
+            // Adjust buttons visually (updated for 5 tabs)
+            for (let i = 1; i <= 5; i++) {
+                const btn = document.getElementById(`tab-btn-${i}`);
+                if (i === tabNum) {
+                    btn.className = "py-3 text-[10px] sm:text-xs font-bold rounded-xl transition-all flex flex-col sm:flex-row items-center justify-center gap-1.5 text-brand-700 bg-brand-50";
+                    btn.querySelector('span').className = "w-5 h-5 bg-brand-600 text-white rounded-full flex items-center justify-center text-[10px]";
+                } else {
+                    btn.className = "py-3 text-[10px] sm:text-xs font-bold rounded-xl transition-all flex flex-col sm:flex-row items-center justify-center gap-1.5 text-slate-500 hover:bg-slate-50";
+                    btn.querySelector('span').className = "w-5 h-5 bg-slate-200 text-slate-600 rounded-full flex items-center justify-center text-[10px]";
+                }
+            }
+
+            // Adjust Canvas Size/aspect-ratio for Slide 5 (A4 Portrait) vs Instagram Slides (1:1)
+            if (tabNum === 5) {
+                // A4 Portrait Aspect Ratio (1 : 1.414)
+                visualizerContainer.className = "w-full max-w-[290px] aspect-[1/1.414] bg-slate-900 rounded-2xl relative shadow-xl overflow-hidden transition-all duration-300 transform border-4 border-white";
+                titleElement.innerText = "Visualisasi Buku Panduan (A4 Portrait Handbook)";
+            } else {
+                // Instagram Square (1:1)
+                visualizerContainer.className = "w-full max-w-[380px] aspect-square bg-slate-900 rounded-2xl relative shadow-xl overflow-hidden transition-all duration-300 transform border-4 border-white";
+                titleElement.innerText = `Visualisasi Tata Letak Instagram - Slide ${tabNum} (1:1)`;
+            }
+
+            // Adjust Visual Mock Layouts
+            for (let i = 1; i <= 5; i++) {
+                document.getElementById(`visual-slide-${i}`).classList.add('hidden');
+            }
+            document.getElementById(`visual-slide-${tabNum}`).classList.remove('hidden');
+
+            document.getElementById('current-slide-num').innerText = tabNum;
+
+            // Display associated active prompt text
+            document.getElementById('prompt-area-text').value = prompts[tabNum];
+        }
+
+        // Main function to dynamically construct the 5 interconnected prompts (4 Instagram + 1 A4 Handbook)
+        function updatePrompts() {
+            // Read all fields
+            const data = {
+                header_utama: document.getElementById('header_utama').value || '[HEADER UTAMA]',
+                sub_header: document.getElementById('sub_header').value || '[NAMA LEMBAGA]',
+                nama_yayasan: document.getElementById('nama_yayasan').value || '[NAMA YAYASAN]',
+                tanggal_distribusi: document.getElementById('tanggal_distribusi').value || '[TANGGAL DISTRIBUSI]',
+                total_penerima: document.getElementById('total_penerima').value || '[TOTAL]',
+                sekolah_aktif: document.getElementById('sekolah_aktif').checked,
+                total_sekolah: document.getElementById('total_sekolah').value || '14',
+                nama_menu: document.getElementById('nama_menu').value || '[NAMA MENU]',
+                tema_desain: document.getElementById('tema_desain').value || '[TEMA DESAIN & WARNA]',
+                b2sa_karbo: document.getElementById('b2sa_karbo').value || '[Karbohidrat]',
+                manfaat_karbo: document.getElementById('manfaat_karbo').value || '[Manfaat]',
+                susu_aktif: document.getElementById('susu_aktif').checked,
+                b2sa_susu: document.getElementById('b2sa_susu').value || '[Susu]',
+                manfaat_susu: document.getElementById('manfaat_susu').value || '[Manfaat]',
+                b2sa_protein: document.getElementById('b2sa_protein').value || '[Protein Hewani]',
+                manfaat_protein: document.getElementById('manfaat_protein').value || '[Manfaat]',
+                b2sa_protein_nabati: document.getElementById('b2sa_protein_nabati').value || '[Protein Nabati]',
+                manfaat_protein_nabati: document.getElementById('manfaat_protein_nabati').value || '[Manfaat]',
+                b2sa_buah: document.getElementById('b2sa_buah').value || '[Buah]',
+                manfaat_buah: document.getElementById('manfaat_buah').value || '[Manfaat]',
+                pk_energi: document.getElementById('pk_energi').value || '[Energi]',
+                pk_protein: document.getElementById('pk_protein').value || '[Protein]',
+                pk_lemak: document.getElementById('pk_lemak').value || '[Lemak]',
+                pk_karbo: document.getElementById('pk_karbo').value || '[Karbo]',
+                pk_sayur: document.getElementById('pk_sayur').value || '[Sayur]',
+                pb_energi: document.getElementById('pb_energi').value || '[Energi]',
+                pb_protein: document.getElementById('pb_protein').value || '[Protein]',
+                pb_lemak: document.getElementById('pb_lemak').value || '[Lemak]',
+                pb_karbo: document.getElementById('pb_karbo').value || '[Karbo]',
+                pb_sayur: document.getElementById('pb_sayur').value || '[Sayur]',
+                filosofi_menu: document.getElementById('filosofi_menu').value || '[FILOSOFI MENU]',
+                detail_foto: document.getElementById('detail_foto').value || '[DETAIL TAMPILAN FOTO MENU ASLI]'
+            };
+
+            // Update Slide 1 - 4 UI Visualizer Mock
+            document.getElementById('prev-header').innerText = data.header_utama;
+            document.getElementById('prev-sub').innerText = data.sub_header;
+            document.getElementById('prev-yayasan').innerText = data.nama_yayasan;
+            document.getElementById('prev-tanggal').innerText = data.tanggal_distribusi;
+            document.getElementById('prev-total').innerText = data.total_penerima;
+
+            if (data.sekolah_aktif) {
+                document.getElementById('prev-sekolah-val').innerText = data.total_sekolah;
+                document.getElementById('prev-sekolah-badge').classList.remove('hidden');
+            } else {
+                document.getElementById('prev-sekolah-badge').classList.add('hidden');
+            }
+
+            document.getElementById('prev-b2sa-karbo').innerText = data.b2sa_karbo;
+            document.getElementById('prev-manfaat-karbo').innerText = data.manfaat_karbo;
+            document.getElementById('prev-b2sa-susu').innerText = data.b2sa_susu;
+            document.getElementById('prev-manfaat-susu').innerText = data.manfaat_susu;
+            document.getElementById('prev-b2sa-protein').innerText = data.b2sa_protein;
+            document.getElementById('prev-manfaat-protein').innerText = data.manfaat_protein;
+            document.getElementById('prev-b2sa-protein-nabati').innerText = data.b2sa_protein_nabati;
+            document.getElementById('prev-manfaat-protein-nabati').innerText = data.manfaat_protein_nabati;
+            document.getElementById('prev-b2sa-buah').innerText = data.b2sa_buah;
+            document.getElementById('prev-manfaat-buah').innerText = data.manfaat_buah;
+
+            document.getElementById('prev-pk-energi').innerText = data.pk_energi;
+            document.getElementById('prev-pk-protein').innerText = data.pk_protein + 'g';
+            document.getElementById('prev-pk-lemak').innerText = data.pk_lemak + 'g';
+            document.getElementById('prev-pk-karbo').innerText = data.pk_karbo + 'g';
+            document.getElementById('prev-pk-sayur').innerText = data.pk_sayur + 'g';
+
+            document.getElementById('prev-pb-energi').innerText = data.pb_energi;
+            document.getElementById('prev-pb-protein').innerText = data.pb_protein + 'g';
+            document.getElementById('prev-pb-lemak').innerText = data.pb_lemak + 'g';
+            document.getElementById('prev-pb-karbo').innerText = data.pb_karbo + 'g';
+            document.getElementById('prev-pb-sayur').innerText = data.pb_sayur + 'g';
+
+            document.getElementById('prev-filosofi').innerText = `"${data.filosofi_menu}"`;
+
+            // Slide 4 Visualizer update
+            document.getElementById('prev-slide4-menu').innerText = data.nama_menu;
+            document.getElementById('prev-slide4-protein').innerText = `${data.b2sa_protein} & ${data.b2sa_protein_nabati}`;
+            document.getElementById('prev-slide4-buah').innerText = data.b2sa_buah;
+            document.getElementById('prev-slide4-detail').innerText = `"${data.detail_foto}"`;
+
+            // Update Slide 5 (A4 Handbook) Mockup Visual
+            document.getElementById('prev5-header').innerText = data.header_utama;
+            document.getElementById('prev5-sub').innerText = data.sub_header;
+            document.getElementById('prev5-tanggal').innerText = data.tanggal_distribusi;
+            document.getElementById('prev5-b2sa-karbo').innerText = data.b2sa_karbo;
+            document.getElementById('prev5-b2sa-susu').innerText = data.b2sa_susu;
+            document.getElementById('prev5-b2sa-protein').innerText = data.b2sa_protein;
+            document.getElementById('prev5-b2sa-protein-nabati').innerText = data.b2sa_protein_nabati;
+            document.getElementById('prev5-b2sa-buah').innerText = data.b2sa_buah;
+            
+            document.getElementById('prev5-pk-energi').innerText = data.pk_energi;
+            document.getElementById('prev5-pb-energi').innerText = data.pb_energi;
+            document.getElementById('prev5-pk-protein').innerText = data.pk_protein;
+            document.getElementById('prev5-pb-protein').innerText = data.pb_protein;
+            document.getElementById('prev5-pk-lemak').innerText = data.pk_lemak;
+            document.getElementById('prev5-pb-lemak').innerText = data.pb_lemak;
+            document.getElementById('prev5-pk-sayur').innerText = data.pk_sayur;
+            document.getElementById('prev5-pb-sayur').innerText = data.pb_sayur;
+
+            document.getElementById('prev5-menu').innerText = data.nama_menu;
+            document.getElementById('prev5-total').innerText = data.total_penerima;
+            document.getElementById('prev5-yayasan').innerText = data.nama_yayasan;
+            document.getElementById('prev5-filosofi').innerText = `"${data.filosofi_menu}"`;
+            document.getElementById('prev5-sekolah-val').innerText = data.sekolah_aktif ? `${data.total_sekolah} Sekolah Dilayani` : 'Program Distribusi';
+
+            // Setup optional text inclusions
+            const sekolahText = data.sekolah_aktif ? ` melayani total ${data.total_sekolah} sekolah dasar di wilayah ini,` : '';
+            const susuString = data.susu_aktif ? `'Susu: [${data.b2sa_susu}]' (${data.manfaat_susu}); ` : '';
+
+            // Prompt 1: Slide 1 (Header/Identitas)
+            prompts[1] = `Sebuah brosur digital berukuran 1080x1080 piksel (persegi), BAGIAN PERTAMA (ujung kanan menyambung mulus ke slide kedua) dari sebuah panorama instagram 4-slide kontinu (continuous seamless carousel). Desain memiliki komposisi yang padat, kaya akan elemen grafis mikro yang rapi, dan seimbang, tanpa menyisakan ruang kosong besar yang sia-sia. Latar belakang menampilkan ilustrasi vektor bertema "${data.tema_desain}". Di pojok kiri atas terdapat logo emblem profesional Badan Gizi Nasional (simbol kesehatan dan nutrisi modern). Judul utama, "${data.header_utama}", terpampang jelas di bagian atas dengan tipografi yang kuat dan bersih, di bawahnya terdapat nama lembaga "${data.sub_header}" dan nama yayasan "${data.nama_yayasan}". Informasi distribusi:${sekolahText} tanggal: "${data.tanggal_distribusi}", serta jumlah penerima: "TOTAL PENERIMA MANFAAT : ${data.total_penerima}" disajikan dalam baris informasi horizontal yang terstruktur rapat di bagian bawah. Di sisi kanan, terdapat foto sisipan melingkar resolusi tinggi yang menampilkan hidangan utama: ${data.nama_menu} yang menggugah selera dalam mangkuk estetik. Ornamen latar belakang mengalir secara visual ke batas kanan gambar untuk menyambung ke gambar berikutnya. Seluruh teks dalam bahasa Indonesia, tata letak rapi, fokus tajam, gaya desain vektor 8k, kualitas iklan komersial. Tidak ada kesalahan ketik. --ar 1:1`;
+
+            // Prompt 2: Slide 2 (B2SA & Nutrisi)
+            prompts[2] = `Sebuah brosur digital berukuran 1080x1080 piksel (persegi), BAGIAN KEDUA (ujung kiri menyambung mulus ke slide pertama, dan ujung kanan menyambung mulus ke slide ketiga) dari panorama instagram 4-slide kontinu (continuous seamless carousel). Desain ini mempertahankan komposisi yang padat, dinamis, dan terisi penuh dengan ornamen serta detail visual, menghindari ruang kosong yang tidak perlu. Latar belakang menggunakan ilustrasi vektor bertema "${data.tema_desain}" yang tersinkronasi sempurna dari slide pertama. Di bagian kiri dan tengah, terdapat infografis menarik dengan ikon-ikon kustom untuk komposisi B2SA yang tersusun rapat: 'Karbohidrat: [${data.b2sa_karbo}]' (${data.manfaat_karbo}); ${susuString}'Protein Hewani: [${data.b2sa_protein}]' (${data.manfaat_protein}); 'Protein Nabati: [${data.b2sa_protein_nabati}]' (${data.manfaat_protein_nabati}); 'Buah: [${data.b2sa_buah}]' (${data.manfaat_buah}). Setiap poin didesain rapat dan terstruktur jelas dengan tipografi yang kuat. Di sisi kanan, kelanjutan foto sisipan ${data.nama_menu} tampak menyatu secara geometris dengan transisi background. Desain vektor 8k, kualitas iklan komersial, tata letak teks tajam, tanpa typo dalam bahasa Indonesia. --ar 1:1`;
+
+            // Prompt 3: Slide 3 (Nilai Gizi & Filosofi)
+            prompts[3] = `Sebuah brosur digital berukuran 1080x1080 piksel (persegi), BAGIAN KETIGA (ujung kiri menyambung mulus ke slide kedua, dan ujung kanan menyambung mulus ke slide keempat) dari panorama instagram 4-slide kontinu (continuous seamless carousel). Desain mempertahankan komposisi padat, seimbang, dan dipenuhi ornamen abstrak bertema "${data.tema_desain}" tanpa menyisakan ruang mati pada kanvas. Gambar ini fokus pada data Nilai Gizi dengan dua tabel visual yang tersusun rapi: 'PORSI KECIL' menampilkan gizi: '-ENERGI : [${data.pk_energi}]', '-PROTEIN: [${data.pk_protein} g]', '-LEMAK: [${data.pk_lemak} g]', '-KARBOHIDRAT: [${data.pk_karbo} g]', '-SAYUR: [${data.pk_sayur} g]'. Di sampingnya, tabel 'PORSI BESAR' menampilkan data: '-ENERGI: [${data.pb_energi}]', '-PROTEIN: [${data.pb_protein} g]', '-LEMAK: [${data.pb_lemak} g]', '-KARBOHIDRAT: [${data.pb_karbo} g]', '-SAYUR: [${data.pb_sayur} g]'. Kedua blok ini memiliki pembatas geometris yang tegas dan tipografi modern yang tajam. Di sepanjang sisi bawah kanvas, tertulis teks: 'Filosofi Menu Hari Ini: ["${data.filosofi_menu}"]'. Desain mengalir mulus ke arah batas kanan untuk menyambung dengan slide foto asli. Kualitas desain vektor 8k, kualitas iklan komersial, tata letak bersih dan tajam, bebas kesalahan ketik dalam bahasa Indonesia. --ar 1:1`;
+
+            // Prompt 4: Slide 4 (Real Photo / Menu Asli in Ompreng)
+            prompts[4] = `Sebuah brosur digital berukuran 1080x1080 piksel (persegi), BAGIAN KEEMPAT DAN TERAKHIR (ujung kiri menyambung mulus ke slide ketiga) dari panorama instagram 4-slide kontinu (continuous seamless carousel). Desain ini dirancang khusus untuk memamerkan foto asli menu hidangan harian yang disajikan secara higienis di dalam wadah bersekat (ompreng). Latar belakang mempertahankan sedikit aksen ornamen dekoratif bertema "${data.tema_desain}" di sepanjang tepi kiri agar menyambung mulus secara visual dari slide ketiga. Area tengah hingga kanan didominasi oleh foto studio makro profesional yang proporsional dengan rasio foto terstruktur 4:3 yang diletakkan secara rapi di dalam layout. Foto tersebut menampilkan sajian menu "${data.nama_menu}" secara memukau di dalam ompreng: ${data.detail_foto}. Komposisinya memamerkan warna alami makanan yang cerah dan memicu selera makan, fokus tajam dengan food styling profesional, kebersihan wadah yang steril, serta pencahayaan studio yang merata tanpa bayangan kasar. Terdapat label minimalis premium di atas bertuliskan "REAL FOOD PHOTOGRAPHY: SAJIAN OMPRENG HARIAN". Gaya desain premium 8k, tajam, bebas typo dalam bahasa Indonesia. --ar 1:1`;
+
+            // Prompt 5: Slide 5 (Handbook A4 Page - Portrait Format)
+            prompts[5] = `Sebuah lembar panduan infografis cetak (infographic handbook page) berukuran standar A4 dengan orientasi vertikal (Portrait) untuk buku panduan program (Handbook). Desain memiliki tata letak terstruktur, formal, akademis namun modern dengan warna latar belakang bertema "${data.tema_desain}". Di bagian atas halaman, terdapat header formal dengan logo emblem resmi Badan Gizi Nasional berdampingan dengan logo program, diikuti judul besar: "${data.header_utama}", nama lembaga "${data.sub_header}", yayasan pelaksana "${data.nama_yayasan}", serta tanggal rilis "${data.tanggal_distribusi}" yang ditata di dalam kotak panel geometris bergaris tegas. Halaman dibagi menjadi dua kolom utama: Kolom kiri memuat daftar komposisi gizi seimbang B2SA lengkap dengan ikon-ikon kustom yang berjejer rapi: 'Karbohidrat: [${data.b2sa_karbo}]', ${data.susu_aktif ? `'Susu: [${data.b2sa_susu}]',` : ''} 'Protein Hewani: [${data.b2sa_protein}]', 'Protein Nabati: [${data.b2sa_protein_nabati}]', 'Buah: [${data.b2sa_buah}]', diikuti tabel perbandingan nilai gizi lengkap 'PORSI KECIL' vs 'PORSI BESAR' (menampilkan Energi, Protein, Lemak, Karbohidrat, Sayur) yang bersih dan rapi. Kolom kanan memuat ilustrasi foto berkualitas tinggi menyajikan menu "${data.nama_menu}" di dalam kotak ompreng stainless steel bersekat sesuai deskripsi: "${data.detail_foto}". Di bagian bawah halaman, terdapat panel horizontal bertuliskan 'Filosofi Menu: "${data.filosofi_menu}"' dan footer resmi berisi nomor seri dokumen panduan dan nomor distribusi ${data.total_penerima} penerima manfaat. Tata letak sangat rapi, bersih, fokus tajam layaknya publikasi cetak profesional, bebas kesalahan ketik dalam bahasa Indonesia. --ar 1:1.414`;
+
+            // Update output textarea
+            document.getElementById('prompt-area-text').value = prompts[activeTab];
+        }
+
+        // Safe clipboard function using older command fallback if navigator.clipboard is unavailable
+        function copyToClipboard(elementId) {
+            const textarea = document.getElementById(elementId);
+            textarea.select();
+            textarea.setSelectionRange(0, 99999); // Mobile compatibility
+
+            try {
+                document.execCommand('copy');
+                showToast("Teks berhasil disalin!");
+            } catch (err) {
+                showToast("Gagal menyalin teks secara otomatis.");
+            }
+        }
+
+        // Copy currently showing tab's prompt
+        function copyCurrentPrompt() {
+            copyToClipboard('prompt-area-text');
+        }
+
+        // Copy all 5 prompts in one formatted text block
+        function copyAllPrompts() {
+            const textAll = `=== PROMPT PROGRAM MAKAN BERGIZI (4 INSTAGRAM SLIDES & 1 A4 HANDBOOK FLYER) ===\n\n[SLIDE 1 - IDENTITAS CAROUSEL (1:1)]\n${prompts[1]}\n\n[SLIDE 2 - INFOGRAFIS B2SA (1:1)]\n${prompts[2]}\n\n[SLIDE 3 - NILAI GIZI & FILOSOFI (1:1)]\n${prompts[3]}\n\n[SLIDE 4 - REAL FOTO OMPRENG (1:1)]\n${prompts[4]}\n\n[SLIDE 5 - HANDBOOK FLYER (A4 PORTRAIT - 1:1.414)]\n${prompts[5]}`;
+            
+            const tempInput = document.createElement("textarea");
+            tempInput.value = textAll;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            tempInput.setSelectionRange(0, 99999);
+            
+            try {
+                document.execCommand('copy');
+                showToast("Semua 5 prompt berhasil disalin!");
+            } catch (err) {
+                showToast("Gagal menyalin.");
+            }
+            document.body.removeChild(tempInput);
+        }
+
+        // Trigger simple text file download containing all 5 prompts
+        function downloadPrompts() {
+            const textAll = `=== PROMPT PROGRAM MAKAN BERGIZI (4 INSTAGRAM SLIDES & 1 A4 HANDBOOK FLYER) ===\n\n[SLIDE 1 - IDENTITAS CAROUSEL (1:1)]\n${prompts[1]}\n\n[SLIDE 2 - INFOGRAFIS B2SA (1:1)]\n${prompts[2]}\n\n[SLIDE 3 - NILAI GIZI & FILOSOFI (1:1)]\n${prompts[3]}\n\n[SLIDE 4 - REAL FOTO OMPRENG (1:1)]\n${prompts[4]}\n\n[SLIDE 5 - HANDBOOK FLYER (A4 PORTRAIT - 1:1.414)]\n${prompts[5]}`;
+            const blob = new Blob([textAll], { type: "text/plain;charset=utf-8" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "prompts_makan_bergizi_carousel_dan_handbook_A4.txt";
+            a.click();
+            URL.revokeObjectURL(url);
+            showToast("File txt berhasil diunduh.");
+        }
+
+        // Micro interaction notifications
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-message').innerText = message;
+            
+            // Animate In
+            toast.classList.remove('opacity-0', 'translate-y-10', 'pointer-events-none');
+            toast.classList.add('opacity-100', 'translate-y-0');
+            
+            // Animate Out after delay
+            setTimeout(() => {
+                toast.classList.remove('opacity-100', 'translate-y-0');
+                toast.classList.add('opacity-0', 'translate-y-10', 'pointer-events-none');
+            }, 3000);
+        }
+
+        // On window startup, set today's automatic date and load the default preset
+        window.onload = function() {
+            const todayDateString = getFormattedDateToday();
+            presets.bubur_mata_ikan.tanggal_distribusi = todayDateString;
+            loadPreset('bubur_mata_ikan');
+        }
+    </script>
+</body>
+</html>
