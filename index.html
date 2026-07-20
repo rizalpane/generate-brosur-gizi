@@ -1,0 +1,1643 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GiziPrompt Pro - Edisi Cloud Sync, Logo 81 & Susu Opsional</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0fbf7',
+                            100: '#dcf6ec',
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857',
+                            800: '#065f46',
+                            900: '#064e3b',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col">
+
+    <!-- Header Section -->
+    <header class="bg-white border-b border-slate-100 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div class="bg-brand-100 p-2.5 rounded-2xl text-brand-700 shadow-inner">
+                    <i class="fa-solid fa-book-open text-2xl"></i>
+                </div>
+                <div>
+                    <h1 class="font-extrabold text-xl sm:text-2xl text-slate-900 tracking-tight">GiziPrompt <span class="text-brand-600">Pro V5.1</span></h1>
+                    <p class="text-xs sm:text-sm text-slate-500 font-medium">Brosur Seamless Berstandar 15 Aspek Desain Efektif (4 Slide Instagram & A4 Handbook)</p>
+                </div>
+            </div>
+            
+            <div class="flex flex-wrap items-center gap-2">
+                <button onclick="clearForm()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 font-semibold rounded-xl text-xs sm:text-sm transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-trash-can"></i> Kosongkan Form
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Cloud & Preset Banner Section -->
+    <section class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 mt-6">
+        <div class="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white rounded-3xl p-6 shadow-xl border border-slate-700 flex flex-col lg:flex-row items-center justify-between gap-6">
+            <!-- Preset selection & management -->
+            <div class="flex-1 w-full grid grid-cols-1 sm:grid-cols-12 gap-4 items-center">
+                <div class="sm:col-span-5">
+                    <label class="block text-xs font-bold text-emerald-400 uppercase tracking-widest mb-1.5"><i class="fa-solid fa-list-check mr-1.5"></i> Pilih Preset Brosur</label>
+                    <select id="preset-selector" onchange="changePresetEvent(this.value)" class="w-full bg-slate-800 border border-slate-700 text-white font-semibold rounded-xl py-2.5 px-4 outline-none focus:ring-2 focus:ring-emerald-500 text-sm">
+                        <!-- Filled dynamically -->
+                    </select>
+                </div>
+                <div class="sm:col-span-7 flex flex-wrap items-end gap-2 pt-2 sm:pt-4">
+                    <button onclick="saveCurrentPreset()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs sm:text-sm transition-all flex items-center gap-2 shadow-md shadow-emerald-900/30">
+                        <i class="fa-solid fa-floppy-disk"></i> Simpan Perubahan
+                    </button>
+                    <button onclick="createNewPresetPrompt()" class="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white font-bold rounded-xl text-xs sm:text-sm transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-plus"></i> Tambah Preset Baru
+                    </button>
+                    <button onclick="deleteCurrentPreset()" class="px-4 py-2 bg-rose-600/20 hover:bg-rose-600 text-rose-300 hover:text-white font-bold rounded-xl text-xs sm:text-sm transition-all flex items-center gap-2 border border-rose-500/30">
+                        <i class="fa-solid fa-trash-can"></i> Hapus
+                    </button>
+                </div>
+            </div>
+
+            <!-- Cloud Sync Workspace controls -->
+            <div class="w-full lg:w-auto shrink-0 flex flex-col md:flex-row items-stretch md:items-center gap-4 border-t lg:border-t-0 lg:border-l border-slate-700/80 pt-6 lg:pt-0 lg:pl-6">
+                <div class="space-y-1">
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1.5">
+                        <span id="cloud-status-dot" class="w-2.5 h-2.5 rounded-full bg-amber-500"></span> 
+                        <span id="cloud-status-text">Lokal Terbuka (Belum Sinkron)</span>
+                    </span>
+                    <div class="flex items-center gap-2 bg-slate-950/80 p-2 rounded-xl border border-slate-700/60 max-w-[280px]">
+                        <input type="password" id="cloud-key-input" placeholder="Cloud Access Key" class="bg-transparent border-none text-xs font-mono text-slate-300 outline-none w-full pl-1 select-all" readonly>
+                        <button onclick="toggleKeyVisibility()" title="Lihat Key" class="text-slate-400 hover:text-white px-1">
+                            <i id="key-visibility-icon" class="fa-solid fa-eye-slash text-xs"></i>
+                        </button>
+                        <button onclick="copyCloudKey()" title="Salin Key" class="text-slate-400 hover:text-emerald-400 px-1">
+                            <i class="fa-solid fa-copy text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="flex flex-col sm:flex-row gap-2 justify-end">
+                    <button onclick="saveWorkspaceToCloud()" class="px-4 py-2.5 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-bold rounded-xl text-xs sm:text-sm transition-all flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20">
+                        <i class="fa-solid fa-cloud-arrow-up"></i> Sync ke Awan
+                    </button>
+                    <button onclick="connectCloudWorkspacePrompt()" class="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold rounded-xl text-xs sm:text-sm transition-all flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-cloud-arrow-down"></i> Muat dari Device Lain
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Workspace -->
+    <main class="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6 grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        <!-- Left Column: Input Form (Form Konten Berstandar Efektif) -->
+        <div class="lg:col-span-5 flex flex-col gap-6">
+            <div class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden flex-1 flex flex-col">
+                <div class="p-5 border-b border-slate-100 bg-slate-50/50 flex justify-between items-center">
+                    <h2 class="font-bold text-slate-800 flex items-center gap-2">
+                        <i class="fa-solid fa-sliders text-brand-600"></i> Form Konten Berstandar Efektif
+                    </h2>
+                    <span class="text-xs bg-brand-100 text-brand-800 px-2 py-1 rounded-full font-bold">Auto-Update</span>
+                </div>
+
+                <!-- Form Scrollable Area -->
+                <div class="p-6 overflow-y-auto max-h-[calc(100vh-270px)] custom-scrollbar space-y-6 flex-1">
+                    
+                    <!-- Section 1: Identitas & Lembaga (Headline, Subheadline, Branding) -->
+                    <div class="border-b border-slate-100 pb-5 space-y-4">
+                        <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wider mb-2 flex items-center gap-2">
+                            <span class="w-5 h-5 bg-brand-100 text-brand-700 rounded-md flex items-center justify-center text-xs">1</span>
+                            Identitas, Headline, & Branding
+                        </h3>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Headline Utama (Max 10 Kata)</label>
+                            <input type="text" id="header_utama" oninput="updatePrompts()" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none text-sm transition-all font-bold">
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Subheadline (Lembaga)</label>
+                                <input type="text" id="sub_header" oninput="updatePrompts()" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none text-sm transition-all">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Nama Yayasan</label>
+                                <input type="text" id="nama_yayasan" oninput="updatePrompts()" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none text-sm transition-all">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Lokasi Distribusi (Where)</label>
+                            <input type="text" id="lokasi_distribusi" oninput="updatePrompts()" placeholder="Contoh: Medan Johor, Kota Medan, Sumatera Utara" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none text-sm transition-all">
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Tanggal Distribusi (When)</label>
+                                <input type="text" id="tanggal_distribusi" oninput="updatePrompts()" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none text-sm transition-all">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Total Penerima Manfaat</label>
+                                <input type="number" id="total_penerima" oninput="updatePrompts()" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none text-sm transition-all">
+                            </div>
+                        </div>
+
+                        <!-- Sekolah Dilayani (Dynamic Delivery Info) -->
+                        <div class="p-3.5 bg-brand-50/50 rounded-2xl border border-brand-100 transition-all duration-200" id="sekolah_container">
+                            <div class="flex items-center justify-between mb-2">
+                                <label class="block text-xs font-bold text-brand-800 uppercase">Sekolah Dilayani <span class="text-[10px] text-slate-400 font-normal italic">(opsional)</span></label>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" id="sekolah_aktif" onchange="toggleSekolah()" class="sr-only peer" checked>
+                                    <div class="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-brand-600"></div>
+                                </label>
+                            </div>
+                            <div id="sekolah_fields" class="space-y-2">
+                                <input type="number" id="total_sekolah" oninput="updatePrompts()" placeholder="Contoh: 14" class="w-full px-4 py-2 bg-white border border-brand-200 rounded-lg text-sm focus:ring-1 focus:ring-brand-500 outline-none">
+                                <p class="text-[10px] text-slate-400 italic leading-snug">Aktifkan untuk menampilkan data pengantaran harian ke sekolah dasar pada dokumen.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 2: Tema & Menu Utama (Hero Image Theme) -->
+                    <div class="border-b border-slate-100 pb-5">
+                        <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wider mb-4 flex items-center gap-2">
+                            <span class="w-5 h-5 bg-brand-100 text-brand-700 rounded-md flex items-center justify-center text-xs">2</span>
+                            Tema & Menu Utama (Hero Image)
+                        </h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Nama Menu Utama (Visual Utama)</label>
+                                <input type="text" id="nama_menu" oninput="updatePrompts()" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none text-sm transition-all font-semibold">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Tema Desain, Ornamen & Warna</label>
+                                <textarea id="tema_desain" oninput="updatePrompts()" rows="3" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none text-sm transition-all resize-none"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 3: Komposisi B2SA (Daftar Bergizi & Ikon) -->
+                    <div class="border-b border-slate-100 pb-5">
+                        <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wider mb-4 flex items-center gap-2">
+                            <span class="w-5 h-5 bg-brand-100 text-brand-700 rounded-md flex items-center justify-center text-xs">3</span>
+                            Komposisi B2SA & Manfaat Tumbuh Kembang
+                        </h3>
+                        <div class="space-y-4">
+                            <!-- Karbohidrat -->
+                            <div class="p-3 bg-amber-50/50 rounded-xl border border-amber-100">
+                                <label class="block text-xs font-bold text-amber-800 uppercase mb-1">Karbohidrat (Bahan & Manfaat)</label>
+                                <input type="text" id="b2sa_karbo" oninput="updatePrompts()" placeholder="Bahan Karbo" class="w-full px-3 py-1.5 bg-white border border-amber-200 rounded-lg text-sm focus:ring-1 focus:ring-amber-500 outline-none mb-2">
+                                <input type="text" id="manfaat_karbo" oninput="updatePrompts()" placeholder="Detail Manfaat Tumbuh Kembang" class="w-full px-3 py-1.5 bg-white border border-amber-200 rounded-lg text-xs focus:ring-1 focus:ring-amber-500 outline-none">
+                            </div>
+                            <!-- Protein Hewani -->
+                            <div class="p-3 bg-red-50/50 rounded-xl border border-red-100">
+                                <label class="block text-xs font-bold text-red-800 uppercase mb-1">Protein Hewani (Bahan & Manfaat)</label>
+                                <input type="text" id="b2sa_protein" oninput="updatePrompts()" placeholder="Bahan Protein Hewani" class="w-full px-3 py-1.5 bg-white border border-red-200 rounded-lg text-sm focus:ring-1 focus:ring-red-500 outline-none mb-2">
+                                <input type="text" id="manfaat_protein" oninput="updatePrompts()" placeholder="Detail Manfaat Tumbuh Kembang" class="w-full px-3 py-1.5 bg-white border border-red-200 rounded-lg text-xs focus:ring-1 focus:ring-red-500 outline-none">
+                            </div>
+                            <!-- Protein Nabati -->
+                            <div class="p-3 bg-orange-50/50 rounded-xl border border-orange-100">
+                                <label class="block text-xs font-bold text-orange-800 uppercase mb-1">Protein Nabati (Bahan & Manfaat)</label>
+                                <input type="text" id="b2sa_protein_nabati" oninput="updatePrompts()" placeholder="Bahan Protein Nabati" class="w-full px-3 py-1.5 bg-white border border-orange-200 rounded-lg text-sm focus:ring-1 focus:ring-orange-500 outline-none mb-2">
+                                <input type="text" id="manfaat_protein_nabati" oninput="updatePrompts()" placeholder="Detail Manfaat Tumbuh Kembang" class="w-full px-3 py-1.5 bg-white border border-orange-200 rounded-lg text-xs focus:ring-1 focus:ring-orange-500 outline-none">
+                            </div>
+                            <!-- Sayur -->
+                            <div class="p-3 bg-teal-50/50 rounded-xl border border-teal-100">
+                                <label class="block text-xs font-bold text-teal-800 uppercase mb-1">Sayur (Bahan & Manfaat)</label>
+                                <input type="text" id="b2sa_sayur" oninput="updatePrompts()" placeholder="Bahan Sayur" class="w-full px-3 py-1.5 bg-white border border-teal-200 rounded-lg text-sm focus:ring-1 focus:ring-teal-500 outline-none mb-2">
+                                <input type="text" id="manfaat_sayur" oninput="updatePrompts()" placeholder="Detail Manfaat Tumbuh Kembang" class="w-full px-3 py-1.5 bg-white border border-teal-200 rounded-lg text-xs focus:ring-1 focus:ring-teal-500 outline-none">
+                            </div>
+                            <!-- Buah -->
+                            <div class="p-3 bg-emerald-50/50 rounded-xl border border-emerald-100">
+                                <label class="block text-xs font-bold text-emerald-800 uppercase mb-1">Buah (Bahan & Manfaat)</label>
+                                <input type="text" id="b2sa_buah" oninput="updatePrompts()" placeholder="Bahan Buah" class="w-full px-3 py-1.5 bg-white border border-emerald-200 rounded-lg text-sm focus:ring-1 focus:ring-emerald-500 outline-none mb-2">
+                                <input type="text" id="manfaat_buah" oninput="updatePrompts()" placeholder="Detail Manfaat Tumbuh Kembang" class="w-full px-3 py-1.5 bg-white border border-emerald-200 rounded-lg text-xs focus:ring-1 focus:ring-emerald-500 outline-none">
+                            </div>
+
+                            <!-- Susu (Kondisional & Opsional - Default Non-Aktif) -->
+                            <div class="p-3 bg-blue-50/50 rounded-xl border border-blue-100 transition-all duration-200" id="susu_container">
+                                <div class="flex items-center justify-between mb-2">
+                                    <label class="block text-xs font-bold text-blue-800 uppercase">Susu Tambahan <span class="text-[10px] text-slate-400 font-normal italic">(opsional - default tidak aktif)</span></label>
+                                    <label class="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" id="susu_aktif" onchange="toggleSusu()" class="sr-only peer">
+                                        <div class="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-600"></div>
+                                    </label>
+                                </div>
+                                <div id="susu_fields" class="space-y-2 opacity-40 pointer-events-none">
+                                    <input type="text" id="b2sa_susu" oninput="updatePrompts()" placeholder="Bahan Susu (Contoh: Susu Sekolah Kemasan)" class="w-full px-3 py-1.5 bg-white border border-blue-200 rounded-lg text-sm focus:ring-1 focus:ring-blue-500 outline-none mb-2">
+                                    <input type="text" id="manfaat_susu" oninput="updatePrompts()" placeholder="Detail Manfaat Tumbuh Kembang" class="w-full px-3 py-1.5 bg-white border border-blue-200 rounded-lg text-xs focus:ring-1 focus:ring-blue-500 outline-none">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 4: Kandungan Gizi (Sayur & Nilai Zat Gizi) -->
+                    <div class="border-b border-slate-100 pb-5">
+                        <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wider mb-4 flex items-center gap-2">
+                            <span class="w-5 h-5 bg-brand-100 text-brand-700 rounded-md flex items-center justify-center text-xs">4</span>
+                            Kandungan Gizi & Sayur per Porsi
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <!-- Porsi Kecil -->
+                            <div class="p-3 bg-slate-50 border border-slate-200 rounded-2xl">
+                                <h4 class="text-xs font-bold text-slate-700 uppercase tracking-wider mb-2 pb-1 border-b border-slate-200 flex justify-between">
+                                    <span>Porsi Kecil</span>
+                                    <i class="fa-solid fa-child text-slate-400"></i>
+                                </h4>
+                                <div class="space-y-1.5">
+                                    <div class="flex items-center justify-between text-xs font-medium">
+                                        <span>Energi (kkal):</span>
+                                        <input type="text" id="pk_energi" oninput="updatePrompts()" class="w-20 px-2 py-0.5 bg-white border border-slate-200 rounded text-right">
+                                    </div>
+                                    <div class="flex items-center justify-between text-xs font-medium">
+                                        <span>Protein (g):</span>
+                                        <input type="text" id="pk_protein" oninput="updatePrompts()" class="w-20 px-2 py-0.5 bg-white border border-slate-200 rounded text-right">
+                                    </div>
+                                    <div class="flex items-center justify-between text-xs font-medium">
+                                        <span>Lemak (g):</span>
+                                        <input type="text" id="pk_lemak" oninput="updatePrompts()" class="w-20 px-2 py-0.5 bg-white border border-slate-200 rounded text-right">
+                                    </div>
+                                    <div class="flex items-center justify-between text-xs font-medium">
+                                        <span>Karbo (g):</span>
+                                        <input type="text" id="pk_karbo" oninput="updatePrompts()" class="w-20 px-2 py-0.5 bg-white border border-slate-200 rounded text-right">
+                                    </div>
+                                    <div class="flex items-center justify-between text-xs font-medium">
+                                        <span>Sayur (g):</span>
+                                        <input type="text" id="pk_sayur" oninput="updatePrompts()" class="w-20 px-2 py-0.5 bg-white border border-slate-200 rounded text-right">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Porsi Besar -->
+                            <div class="p-3 bg-slate-50 border border-slate-200 rounded-2xl">
+                                <h4 class="text-xs font-bold text-slate-700 uppercase tracking-wider mb-2 pb-1 border-b border-slate-200 flex justify-between">
+                                    <span>Porsi Besar</span>
+                                    <i class="fa-solid fa-person text-slate-400"></i>
+                                </h4>
+                                <div class="space-y-1.5">
+                                    <div class="flex items-center justify-between text-xs font-medium">
+                                        <span>Energi (kkal):</span>
+                                        <input type="text" id="pb_energi" oninput="updatePrompts()" class="w-20 px-2 py-0.5 bg-white border border-slate-200 rounded text-right">
+                                    </div>
+                                    <div class="flex items-center justify-between text-xs font-medium">
+                                        <span>Protein (g):</span>
+                                        <input type="text" id="pb_protein" oninput="updatePrompts()" class="w-20 px-2 py-0.5 bg-white border border-slate-200 rounded text-right">
+                                    </div>
+                                    <div class="flex items-center justify-between text-xs font-medium">
+                                        <span>Lemak (g):</span>
+                                        <input type="text" id="pb_lemak" oninput="updatePrompts()" class="w-20 px-2 py-0.5 bg-white border border-slate-200 rounded text-right">
+                                    </div>
+                                    <div class="flex items-center justify-between text-xs font-medium">
+                                        <span>Karbo (g):</span>
+                                        <input type="text" id="pb_karbo" oninput="updatePrompts()" class="w-20 px-2 py-0.5 bg-white border border-slate-200 rounded text-right">
+                                    </div>
+                                    <div class="flex items-center justify-between text-xs font-medium">
+                                        <span>Sayur (g):</span>
+                                        <input type="text" id="pb_sayur" oninput="updatePrompts()" class="w-20 px-2 py-0.5 bg-white border border-slate-200 rounded text-right">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 5: Value Proposition, CTA, dan Kontak -->
+                    <div class="border-b border-slate-100 pb-5 space-y-4">
+                        <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wider mb-2 flex items-center gap-2">
+                            <span class="w-5 h-5 bg-brand-100 text-brand-700 rounded-md flex items-center justify-center text-xs">5</span>
+                            Value Proposition, CTA & Kontak
+                        </h3>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Value Proposition / Keunggulan (Gunakan pemisah •)</label>
+                            <input type="text" id="value_prop" oninput="updatePrompts()" placeholder="Contoh: Gratis Tanpa Biaya • Standar Gizi Nasional • 100% Higienis" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none text-sm transition-all font-medium">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Call to Action (CTA) / Kalimat Ajakan</label>
+                            <input type="text" id="cta_text" oninput="updatePrompts()" placeholder="Contoh: Dapatkan kupon distribusi melalui SPPG terdekat!" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none text-sm transition-all">
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Saluran Kontak (WA/Telp)</label>
+                                <input type="text" id="kontak_wa" oninput="updatePrompts()" placeholder="Contoh: WhatsApp: 0812-3456-7890" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none text-sm transition-all">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Media Sosial (IG/Web)</label>
+                                <input type="text" id="kontak_ig" oninput="updatePrompts()" placeholder="Contoh: Instagram: @AtifaMajuMandiri" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none text-sm transition-all">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 6: Filosofi Menu -->
+                    <div class="border-b border-slate-100 pb-5">
+                        <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wider mb-4 flex items-center gap-2">
+                            <span class="w-5 h-5 bg-brand-100 text-brand-700 rounded-md flex items-center justify-center text-xs">6</span>
+                            Filosofi Menu
+                        </h3>
+                        <div>
+                            <textarea id="filosofi_menu" oninput="updatePrompts()" rows="3" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none text-sm transition-all resize-none"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Section 7: Detail Foto Menu Asli (Sajian Ompreng) -->
+                    <div class="pb-2">
+                        <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wider mb-4 flex items-center gap-2">
+                            <span class="w-5 h-5 bg-brand-100 text-brand-700 rounded-md flex items-center justify-center text-xs">7</span>
+                            Detail Tampilan Foto Ompreng (Rasio 4:3)
+                        </h3>
+                        <div>
+                            <textarea id="detail_foto" oninput="updatePrompts()" rows="4" placeholder="Deskripsikan penataan detail foto ompreng bersekat secara profesional..." class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none text-sm transition-all resize-none"></textarea>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column: Outputs & Interactive Carousel Mocks -->
+        <div class="lg:col-span-7 flex flex-col gap-6">
+            
+            <!-- Tab Controls -->
+            <div class="bg-white p-1.5 rounded-2xl border border-slate-200 shadow-sm grid grid-cols-2 sm:grid-cols-5 gap-1.5">
+                <button onclick="switchTab(1)" id="tab-btn-1" class="py-3 text-[10px] sm:text-xs font-bold rounded-xl transition-all flex flex-col sm:flex-row items-center justify-center gap-1.5 text-brand-700 bg-brand-50">
+                    <span class="w-5 h-5 bg-brand-600 text-white rounded-full flex items-center justify-center text-[10px]">1</span> Identitas
+                </button>
+                <button onclick="switchTab(2)" id="tab-btn-2" class="py-3 text-[10px] sm:text-xs font-bold rounded-xl transition-all flex flex-col sm:flex-row items-center justify-center gap-1.5 text-slate-500 hover:bg-slate-50">
+                    <span class="w-5 h-5 bg-slate-200 text-slate-600 rounded-full flex items-center justify-center text-[10px]">2</span> B2SA
+                </button>
+                <button onclick="switchTab(3)" id="tab-btn-3" class="py-3 text-[10px] sm:text-xs font-bold rounded-xl transition-all flex flex-col sm:flex-row items-center justify-center gap-1.5 text-slate-500 hover:bg-slate-50">
+                    <span class="w-5 h-5 bg-slate-200 text-slate-600 rounded-full flex items-center justify-center text-[10px]">3</span> Gizi
+                </button>
+                <button onclick="switchTab(4)" id="tab-btn-4" class="py-3 text-[10px] sm:text-xs font-bold rounded-xl transition-all flex flex-col sm:flex-row items-center justify-center gap-1.5 text-slate-500 hover:bg-slate-50">
+                    <span class="w-5 h-5 bg-slate-200 text-slate-600 rounded-full flex items-center justify-center text-[10px]">4</span> Foto Asli
+                </button>
+                <button onclick="switchTab(5)" id="tab-btn-5" class="col-span-2 sm:col-span-1 py-3 text-[10px] sm:text-xs font-bold rounded-xl transition-all flex flex-col sm:flex-row items-center justify-center gap-1.5 text-slate-500 hover:bg-slate-50">
+                    <span class="w-5 h-5 bg-slate-200 text-slate-600 rounded-full flex items-center justify-center text-[10px]">5</span> A4 Handbook
+                </button>
+            </div>
+
+            <!-- Visualizer Card Area -->
+            <div class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden flex flex-col flex-1">
+                <div class="p-5 border-b border-slate-100 bg-slate-50/50 flex justify-between items-center flex-wrap gap-2">
+                    <span id="canvas-aspect-title" class="text-xs font-bold text-slate-400 tracking-wider uppercase">Visualisasi Tata Letak Instagram (1:1)</span>
+                    <button onclick="copyCurrentPrompt()" class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-2 shadow-sm shadow-brand-200">
+                        <i class="fa-solid fa-copy"></i> Salin Prompt Slide <span id="current-slide-num">1</span>
+                    </button>
+                </div>
+
+                <!-- Live Slide Preview Simulated Area -->
+                <div class="p-6 flex flex-col items-center justify-center bg-slate-100/50 flex-1 min-h-[460px]">
+                    
+                    <!-- Simulated Instagram Canvas Frame -->
+                    <div id="slide-visual-container" class="w-full max-w-[380px] aspect-square bg-slate-900 rounded-2xl relative shadow-xl overflow-hidden transition-all duration-300 transform border-4 border-white">
+                        
+                        <!-- Common background overlay -->
+                        <div class="absolute inset-0 opacity-15 pointer-events-none mix-blend-overlay bg-gradient-to-b from-transparent to-slate-950">
+                            <div class="absolute w-64 h-64 bg-emerald-300 rounded-full -top-10 -left-10 filter blur-2xl"></div>
+                            <div class="absolute w-64 h-64 bg-amber-400 rounded-full -bottom-10 -right-10 filter blur-3xl"></div>
+                        </div>
+
+                        <!-- SLIDE 1 PREVIEW CONTENT (Identitas & Double Logo) -->
+                        <div id="visual-slide-1" class="absolute inset-0 p-6 flex flex-col justify-between text-white z-10">
+                            <div class="flex items-start justify-between w-full">
+                                <div class="flex items-center gap-1.5">
+                                    <div class="flex gap-1">
+                                        <div class="w-6 h-6 bg-brand-500 rounded flex items-center justify-center text-[7px] font-bold text-white shadow-md leading-none">BGN</div>
+                                        <div class="w-6 h-6 bg-blue-600 rounded flex items-center justify-center text-[7px] font-bold text-white shadow-md leading-none">81</div>
+                                    </div>
+                                    <div class="text-[8px] uppercase tracking-wider font-extrabold leading-none">Badan Gizi<br><span class="text-emerald-400">Nasional</span></div>
+                                </div>
+                                <div id="prev-sekolah-badge" class="bg-amber-500/20 text-amber-300 px-2 py-1 rounded text-[8px] font-bold uppercase tracking-wider border border-amber-500/40 hidden">
+                                    <i class="fa-solid fa-school mr-1"></i> <span id="prev-sekolah-val">14</span> Sekolah
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-12 gap-3 flex-1 items-center mt-3">
+                                <div class="col-span-7 pr-1">
+                                    <span class="text-[8px] bg-emerald-600/60 text-emerald-300 px-1.5 py-0.5 rounded font-bold uppercase tracking-wider mb-1 inline-block">Program Gratis</span>
+                                    <h4 id="prev-header" class="text-xs font-extrabold text-white leading-tight uppercase mb-1">MENU MAKAN GRATIS BERGIZI</h4>
+                                    <p id="prev-sub" class="text-[9px] font-bold text-brand-300 uppercase truncate">SPPG PANGKALAN MANSYUR III</p>
+                                    <p id="prev-yayasan" class="text-[8px] opacity-70 italic truncate font-semibold mb-2">YAYASAN ATIFA MAJU MANDIRI</p>
+                                    <p class="text-[8px] text-slate-300 flex items-center gap-1"><i class="fa-solid fa-location-dot text-brand-400"></i> <span id="prev-lokasi" class="truncate">Medan Johor, Kota Medan</span></p>
+                                </div>
+                                <div class="col-span-5 aspect-square bg-slate-800 rounded-xl relative flex items-center justify-center border border-slate-700 overflow-hidden shadow-inner group">
+                                    <div class="absolute inset-0 bg-gradient-to-tr from-slate-950/80 to-transparent z-10"></div>
+                                    <span class="text-[9px] text-slate-400 font-extrabold uppercase tracking-widest text-center px-1 z-20"><i class="fa-solid fa-camera text-slate-500 text-lg mb-1 block"></i>HERO IMAGE</span>
+                                </div>
+                            </div>
+
+                            <div class="bg-slate-950/40 p-2 rounded-lg border border-slate-800/60 space-y-1 mb-2">
+                                <p id="prev-value" class="text-[7px] text-emerald-400 font-extrabold tracking-wide uppercase truncate">Gratis Tanpa Biaya • Standar Gizi</p>
+                                <p id="prev-cta" class="text-[7px] text-slate-200 font-medium truncate">Dapatkan kupon distribusi di SPPG!</p>
+                            </div>
+
+                            <div class="border-t border-slate-800/80 pt-2 flex justify-between items-center text-[8px] tracking-wide font-medium">
+                                <div class="opacity-80"><i class="fa-solid fa-calendar-day text-brand-400 mr-1"></i><span id="prev-tanggal">JUMAT 12 JUNI 2026</span></div>
+                                <div class="bg-brand-900/80 text-brand-200 px-2 py-0.5 rounded border border-brand-800"><i class="fa-solid fa-users mr-1"></i>Penerima: <span id="prev-total" class="font-bold">1774</span></div>
+                            </div>
+                        </div>
+
+                        <!-- SLIDE 2 PREVIEW CONTENT (B2SA & Nutrisi) -->
+                        <div id="visual-slide-2" class="absolute inset-0 p-6 flex flex-col justify-between text-white z-10 hidden">
+                            <div class="flex justify-between items-center border-b border-slate-800/80 pb-2">
+                                <span class="text-[8px] font-bold text-brand-400 uppercase tracking-widest">KOMPOSISI B2SA & MANFAAT</span>
+                                <span class="text-[8px] opacity-50 font-bold">SLIDE 2 / 4</span>
+                            </div>
+
+                            <div class="grid grid-cols-12 gap-3 flex-1 items-center my-2">
+                                <div class="col-span-8 space-y-1 max-h-[210px] overflow-y-auto custom-scrollbar pr-1">
+                                    <div class="flex items-start gap-1.5">
+                                        <span class="w-4 h-4 bg-amber-500/20 text-amber-400 rounded flex items-center justify-center text-[8px] font-bold shrink-0 mt-0.5">K</span>
+                                        <div>
+                                            <p class="text-[9px] font-bold text-slate-200 leading-none" id="prev-b2sa-karbo">Bubur Mata Ikan</p>
+                                            <p class="text-[7px] text-slate-400 truncate max-w-[140px]" id="prev-manfaat-karbo">Energi instan pertumbuhan</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start gap-1.5">
+                                        <span class="w-4 h-4 bg-red-500/20 text-red-400 rounded flex items-center justify-center text-[8px] font-bold shrink-0 mt-0.5">PH</span>
+                                        <div>
+                                            <p class="text-[9px] font-bold text-slate-200 leading-none" id="prev-b2sa-protein">Telur Ayam</p>
+                                            <p class="text-[7px] text-slate-400 truncate max-w-[140px]" id="prev-manfaat-protein">Protein pembangun otot</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start gap-1.5">
+                                        <span class="w-4 h-4 bg-orange-500/20 text-orange-400 rounded flex items-center justify-center text-[8px] font-bold shrink-0 mt-0.5">PN</span>
+                                        <div>
+                                            <p class="text-[9px] font-bold text-slate-200 leading-none" id="prev-b2sa-protein-nabati">Kacang Merah</p>
+                                            <p class="text-[7px] text-slate-400 truncate max-w-[140px]" id="prev-manfaat-protein-nabati">Kekebalan & metabolisme</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start gap-1.5">
+                                        <span class="w-4 h-4 bg-teal-500/20 text-teal-400 rounded flex items-center justify-center text-[8px] font-bold shrink-0 mt-0.5">S</span>
+                                        <div>
+                                            <p class="text-[9px] font-bold text-slate-200 leading-none" id="prev-b2sa-sayur">Wortel & Sawi Hijau</p>
+                                            <p class="text-[7px] text-slate-400 truncate max-w-[140px]" id="prev-manfaat-sayur">Serat & vitamin mata</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start gap-1.5">
+                                        <span class="w-4 h-4 bg-emerald-500/20 text-emerald-400 rounded flex items-center justify-center text-[8px] font-bold shrink-0 mt-0.5">B</span>
+                                        <div>
+                                            <p class="text-[9px] font-bold text-slate-200 leading-none" id="prev-b2sa-buah">Buah Jeruk</p>
+                                            <p class="text-[7px] text-slate-400 truncate max-w-[140px]" id="prev-manfaat-buah">Vitamin C daya tahan tubuh</p>
+                                        </div>
+                                    </div>
+                                    <!-- Susu item on mockup (kondisional) -->
+                                    <div class="flex items-start gap-1.5 hidden" id="prev-b2sa-susu-container">
+                                        <span class="w-4 h-4 bg-blue-500/20 text-blue-400 rounded flex items-center justify-center text-[8px] font-bold shrink-0 mt-0.5">Susu</span>
+                                        <div>
+                                            <p class="text-[9px] font-bold text-slate-200 leading-none" id="prev-b2sa-susu">Susu Steril</p>
+                                            <p class="text-[7px] text-slate-400 truncate max-w-[140px]" id="prev-manfaat-susu">Kalsium & pembentukan tulang</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-span-4 aspect-square bg-slate-800 rounded-xl relative flex items-center justify-center border border-slate-700 overflow-hidden shadow-inner opacity-60">
+                                    <span class="text-[7px] text-slate-500 font-bold uppercase text-center px-1">INFOGRAFIS INTERAKTIF</span>
+                                </div>
+                            </div>
+
+                            <div class="bg-slate-950/40 p-1.5 rounded border border-slate-800/60 text-center flex justify-around text-[7px] text-slate-300">
+                                <span id="prev-kontak-wa">WA: 0812-3456-7890</span>
+                                <span>•</span>
+                                <span id="prev-kontak-ig">IG: @AtifaMajuMandiri</span>
+                            </div>
+                        </div>
+
+                        <!-- SLIDE 3 PREVIEW CONTENT (Nilai Gizi) -->
+                        <div id="visual-slide-3" class="absolute inset-0 p-6 flex flex-col justify-between text-white z-10 hidden">
+                            <div class="flex justify-between items-center border-b border-slate-800/80 pb-2">
+                                <span class="text-[8px] font-bold text-emerald-400 uppercase tracking-widest">INFORMASI NILAI GIZI & SAYUR</span>
+                                <span class="text-[8px] opacity-50 font-bold">SLIDE 3 / 4</span>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-3 my-2">
+                                <div class="bg-slate-800/50 border border-slate-700/50 p-2 rounded-xl">
+                                    <h5 class="text-[9px] font-bold text-emerald-300 border-b border-slate-700 pb-1 mb-1.5 flex justify-between">
+                                        <span>PORSI KECIL</span>
+                                        <i class="fa-solid fa-child"></i>
+                                    </h5>
+                                    <div class="space-y-1 text-[8px]">
+                                        <div class="flex justify-between"><span>Energi:</span><span class="font-bold" id="prev-pk-energi">241.9 kkal</span></div>
+                                        <div class="flex justify-between"><span>Protein:</span><span class="font-bold" id="prev-pk-protein">10.4g</span></div>
+                                        <div class="flex justify-between"><span>Lemak:</span><span class="font-bold" id="prev-pk-lemak">10.3g</span></div>
+                                        <div class="flex justify-between"><span>Karbo:</span><span class="font-bold" id="prev-pk-karbo">29.3g</span></div>
+                                        <div class="flex justify-between"><span>Sayur:</span><span class="font-bold" id="prev-pk-sayur">0.3g</span></div>
+                                    </div>
+                                </div>
+                                <div class="bg-slate-800/50 border border-slate-700/50 p-2 rounded-xl">
+                                    <h5 class="text-[9px] font-bold text-amber-300 border-b border-slate-700 pb-1 mb-1.5 flex justify-between">
+                                        <span>PORSI BESAR</span>
+                                        <i class="fa-solid fa-person"></i>
+                                    </h5>
+                                    <div class="space-y-1 text-[8px]">
+                                        <div class="flex justify-between"><span>Energi:</span><span class="font-bold" id="prev-pb-energi">315.8 kkal</span></div>
+                                        <div class="flex justify-between"><span>Protein:</span><span class="font-bold" id="prev-pb-protein">11g</span></div>
+                                        <div class="flex justify-between"><span>Lemak:</span><span class="font-bold" id="prev-pb-lemak">11g</span></div>
+                                        <div class="flex justify-between"><span>Karbo:</span><span class="font-bold" id="prev-pb-karbo">36.6g</span></div>
+                                        <div class="flex justify-between"><span>Sayur:</span><span class="font-bold" id="prev-pb-sayur">0.5g</span></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="border-t border-slate-800/80 pt-2 text-[7px] leading-relaxed italic text-slate-300">
+                                <span class="font-bold text-slate-200">Filosofi Menu:</span>
+                                <span id="prev-filosofi">"Perpaduan bahan lokal..."</span>
+                            </div>
+                        </div>
+
+                        <!-- SLIDE 4 PREVIEW CONTENT (Sajian Ompreng 4:3) -->
+                        <div id="visual-slide-4" class="absolute inset-0 p-6 flex flex-col justify-between text-white z-10 hidden">
+                            <div class="flex justify-between items-center border-b border-slate-800/80 pb-2">
+                                <span class="text-[8px] font-bold text-emerald-400 uppercase tracking-widest">SAJIAN OMPRENG HIGIENIS (4:3)</span>
+                                <span class="text-[8px] opacity-50 font-bold">SLIDE 4 / 4</span>
+                            </div>
+
+                            <div class="flex-1 flex flex-col items-center justify-center my-2 relative">
+                                <div class="w-[90%] aspect-[4/3] bg-slate-800 border-2 border-slate-700 rounded-xl p-2.5 flex flex-col justify-between shadow-2xl relative overflow-hidden">
+                                    <div class="absolute inset-0 bg-slate-900/30 pointer-events-none"></div>
+                                    <div class="grid grid-cols-12 gap-1.5 h-[80%]">
+                                        <div class="col-span-7 bg-slate-950/70 rounded-lg p-2 border border-slate-700/50 flex flex-col justify-center items-center">
+                                            <i class="fa-solid fa-bowl-rice text-brand-400 text-base mb-1"></i>
+                                            <span class="text-[8px] font-bold text-center text-slate-100 block truncate w-full" id="prev-slide4-menu">BUBUR MAKANAN BERGIZI</span>
+                                            <span class="text-[6px] text-slate-400 uppercase font-medium">Sekat Utama</span>
+                                        </div>
+                                        <div class="col-span-5 flex flex-col gap-1.5">
+                                            <div class="h-1/3 bg-slate-950/70 rounded-lg p-1 border border-slate-700/50 flex flex-col justify-center items-center text-center">
+                                                <i class="fa-solid fa-egg text-amber-400 text-[9px] mb-0.5"></i>
+                                                <span class="text-[6px] text-slate-200 font-bold truncate w-full text-center" id="prev-slide4-protein">Telur Ayam</span>
+                                            </div>
+                                            <div class="h-1/3 bg-slate-950/70 rounded-lg p-1 border border-slate-700/50 flex flex-col justify-center items-center text-center">
+                                                <i class="fa-solid fa-carrot text-orange-400 text-[9px] mb-0.5"></i>
+                                                <span class="text-[6px] text-slate-200 font-bold truncate w-full text-center" id="prev-slide4-sayur">Wortel Sawi</span>
+                                            </div>
+                                            <div class="h-1/3 bg-slate-950/70 rounded-lg p-1 border border-slate-700/50 flex flex-col justify-center items-center text-center">
+                                                <i class="fa-solid fa-apple-whole text-emerald-400 text-[9px] mb-0.5"></i>
+                                                <span class="text-[6px] text-slate-200 font-bold truncate w-full text-center" id="prev-slide4-buah">Jeruk Manis</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="h-[18%] bg-slate-900/80 rounded-lg px-2 flex items-center justify-between border border-slate-700/30" id="prev-slide4-susu-tray">
+                                        <span class="text-[6px] font-bold text-brand-300 uppercase tracking-wider flex items-center" id="prev-slide4-extra-label">
+                                            <i class="fa-solid fa-glass-water mr-1 text-[8px]" id="prev-slide4-extra-icon"></i> <span id="prev-slide4-extra-text">Air Mineral Steril</span>
+                                        </span>
+                                        <span class="text-[6px] text-slate-400">Higienis & Rapi</span>
+                                    </div>
+                                </div>
+                                <p class="text-[7px] text-slate-400 mt-2 text-center leading-snug line-clamp-2 italic px-3" id="prev-slide4-detail">"Disajikan rapi di dalam sekat ompreng..."</p>
+                            </div>
+
+                            <div class="border-t border-slate-800/80 pt-2 flex justify-between items-center text-[8px] text-slate-400 font-medium">
+                                <span>#MakanGratisBergizi</span>
+                                <span class="bg-brand-900/80 text-brand-300 px-1.5 py-0.5 rounded border border-brand-800 text-[7px] uppercase tracking-wider font-bold">100% HIGIENIS & STANDAR GIZI</span>
+                            </div>
+                        </div>
+
+                        <!-- SLIDE 5 PREVIEW CONTENT (A4 PORTRAIT HANDBOOK) -->
+                        <div id="visual-slide-5" class="absolute inset-0 p-5 flex flex-col justify-between text-white z-10 hidden text-[7px]">
+                            <!-- Top Header of A4 Handout with Double Logo -->
+                            <div class="flex items-center justify-between border-b border-slate-800/90 pb-1 mb-1">
+                                <div class="flex items-center gap-1.5">
+                                    <div class="flex gap-0.5">
+                                        <div class="w-4 h-4 bg-brand-500 rounded flex items-center justify-center text-[5px] font-bold text-white shadow-sm">BGN</div>
+                                        <div class="w-4 h-4 bg-blue-600 rounded flex items-center justify-center text-[5px] font-bold text-white shadow-sm">81</div>
+                                    </div>
+                                    <div class="text-[6px] uppercase tracking-wider font-extrabold leading-none">Panduan Resmi<br><span class="text-emerald-400">Badan Gizi Nasional & 81</span></div>
+                                </div>
+                                <div class="bg-emerald-600/30 border border-emerald-500/30 px-1 py-0.5 rounded text-[5px] font-bold text-emerald-300 uppercase">
+                                    PANDUAN HANDBOOK A4
+                                </div>
+                            </div>
+
+                            <!-- Title Box -->
+                            <div class="text-center bg-slate-900/90 py-1.5 px-2 rounded-lg border border-slate-800/70 mb-1">
+                                <h4 id="prev5-header" class="text-[8.5px] font-extrabold text-white tracking-wide uppercase leading-tight">MENU MAKAN GRATIS BERGIZI</h4>
+                                <div class="flex justify-center items-center gap-2 text-[5.5px] text-slate-400 mt-0.5 font-medium flex-wrap">
+                                    <span id="prev5-sub">SPPG PANGKALAN MANSYUR III</span>
+                                    <span>•</span>
+                                    <span id="prev5-tanggal">JUMAT 12 JUNI 2026</span>
+                                </div>
+                            </div>
+
+                            <!-- Value Proposition horizontal bar -->
+                            <div class="bg-brand-950/40 border border-brand-900/50 text-center py-1 rounded-md text-[6px] text-brand-300 font-extrabold uppercase tracking-wide px-1 truncate mb-1">
+                                <i class="fa-solid fa-circle-check mr-1 text-emerald-400"></i><span id="prev5-value-prop">Gratis Tanpa Biaya • Standar Gizi</span>
+                            </div>
+
+                            <!-- Split Content: Left Information, Right Graphics preview -->
+                            <div class="grid grid-cols-12 gap-2 flex-1 items-stretch mb-1 overflow-hidden">
+                                <!-- Left Column: B2SA & Nutrisi -->
+                                <div class="col-span-7 flex flex-col justify-between bg-slate-950/40 p-1.5 rounded-lg border border-slate-900/60 overflow-hidden space-y-1.5">
+                                    <!-- B2SA Mini List -->
+                                    <div>
+                                        <h5 class="text-[6.5px] font-bold text-emerald-400 uppercase tracking-wider border-b border-slate-900/50 pb-0.5 mb-1 flex items-center gap-1">
+                                            <i class="fa-solid fa-heart-pulse"></i> Komposisi B2SA
+                                        </h5>
+                                        <div class="space-y-0.5 text-[5px] text-slate-300">
+                                            <p class="truncate"><span class="font-bold text-amber-300">K:</span> <span id="prev5-b2sa-karbo">Bubur Mata Ikan</span></p>
+                                            <p class="truncate"><span class="font-bold text-red-300">PH:</span> <span id="prev5-b2sa-protein">Telur Ayam</span></p>
+                                            <p class="truncate"><span class="font-bold text-orange-300">PN:</span> <span id="prev5-b2sa-protein-nabati">Kacang Merah</span></p>
+                                            <p class="truncate"><span class="font-bold text-teal-300">S:</span> <span id="prev5-b2sa-sayur">Wortel Sawi</span></p>
+                                            <p class="truncate"><span class="font-bold text-emerald-300">B:</span> <span id="prev5-b2sa-buah">Buah Jeruk</span></p>
+                                            <p class="truncate hidden" id="prev5-b2sa-susu-container"><span class="font-bold text-blue-300">Susu:</span> <span id="prev5-b2sa-susu">Susu Sekolah</span></p>
+                                        </div>
+                                    </div>
+
+                                    <!-- Nutrition Data Sheet -->
+                                    <div class="space-y-1">
+                                        <h5 class="text-[6.5px] font-bold text-amber-400 uppercase tracking-wider border-b border-slate-900/50 pb-0.5 flex items-center gap-1">
+                                            <i class="fa-solid fa-chart-simple"></i> Nilai Gizi & Sayur
+                                        </h5>
+                                        <table class="w-full text-[5px] border-collapse text-slate-300">
+                                            <thead>
+                                                <tr class="border-b border-slate-900 text-slate-400">
+                                                    <th class="text-left font-bold py-0.5">Zat Gizi</th>
+                                                    <th class="text-right font-bold py-0.5">P. Kecil</th>
+                                                    <th class="text-right font-bold py-0.5">P. Besar</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr class="border-b border-slate-900/30">
+                                                    <td class="py-0.5">Energi</td>
+                                                    <td class="text-right font-bold text-emerald-400" id="prev5-pk-energi">241.9</td>
+                                                    <td class="text-right font-bold text-amber-400" id="prev5-pb-energi">315.8</td>
+                                                </tr>
+                                                <tr class="border-b border-slate-900/30">
+                                                    <td class="py-0.5">Protein (g)</td>
+                                                    <td class="text-right font-bold" id="prev5-pk-protein">10.4</td>
+                                                    <td class="text-right font-bold" id="prev5-pb-protein">11</td>
+                                                </tr>
+                                                <tr class="border-b border-slate-900/30">
+                                                    <td class="py-0.5">Lemak (g)</td>
+                                                    <td class="text-right" id="prev5-pk-lemak">10.3</td>
+                                                    <td class="text-right" id="prev5-pb-lemak">11</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="py-0.5">Sayur (g)</td>
+                                                    <td class="text-right font-bold text-emerald-300" id="prev5-pk-sayur">0.3</td>
+                                                    <td class="text-right font-bold text-emerald-300" id="prev5-pb-sayur">0.5</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <!-- Right Column: Visual Showcase -->
+                                <div class="col-span-5 flex flex-col justify-between space-y-1.5">
+                                    <!-- Photo Ompreng Slot -->
+                                    <div class="flex-1 bg-slate-950/70 border border-slate-800/80 rounded-lg p-1.5 flex flex-col justify-center items-center text-center relative overflow-hidden">
+                                        <i class="fa-solid fa-plate-wheat text-brand-400 text-sm mb-1"></i>
+                                        <span class="text-[6.5px] font-bold text-white block leading-tight uppercase text-center w-full" id="prev5-menu">Bubur Makanan Bergizi</span>
+                                        <span class="text-[4.5px] text-slate-500 uppercase tracking-wider mt-0.5">Sajian Dalam Ompreng 4:3</span>
+                                    </div>
+                                    <!-- Stat box -->
+                                    <div class="bg-slate-950/60 border border-slate-900/50 rounded-lg p-1.5 text-center flex flex-col justify-center">
+                                        <span class="text-[4.5px] text-brand-300 font-bold uppercase tracking-wider">Total Penerima</span>
+                                        <span class="text-[9px] font-extrabold text-white leading-none mt-0.5" id="prev5-total">1774</span>
+                                        <span class="text-[4.5px] text-slate-400 mt-0.5 truncate" id="prev5-yayasan">Yayasan Atifa Mandiri</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Bottom Area: Philosophy & CTA / Kontak -->
+                            <div class="border-t border-slate-800/90 pt-1.5 grid grid-cols-12 gap-1.5 bg-slate-950/30 p-1.5 rounded-lg border border-slate-900/40">
+                                <div class="col-span-7">
+                                    <h5 class="text-[5.5px] font-bold text-amber-500 uppercase tracking-widest mb-0.5">Filosofi Menu</h5>
+                                    <p class="text-[5px] text-slate-300 leading-snug italic" id="prev5-filosofi">"Perpaduan bahan lokal..."</p>
+                                </div>
+                                <div class="col-span-5 border-l border-slate-800/50 pl-1.5 flex flex-col justify-between">
+                                    <div>
+                                        <h5 class="text-[5.5px] font-bold text-brand-400 uppercase tracking-wider mb-0.5"><i class="fa-solid fa-bell mr-0.5"></i>Ajakan (CTA)</h5>
+                                        <p class="text-[4.5px] text-slate-200 leading-none truncate" id="prev5-cta-val">Hubungi SPPG Terdekat</p>
+                                    </div>
+                                    <div class="text-[4.5px] text-slate-400 space-y-0.5 pt-1">
+                                        <p class="truncate" id="prev5-wa-val">WA: 0812-3456-7890</p>
+                                        <p class="truncate" id="prev5-ig-val">IG: @AtifaMajuMandiri</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Footer block -->
+                            <div class="border-t border-slate-900/80 pt-1 flex justify-between items-center text-[5px] text-slate-500 font-medium">
+                                <span>Medan Johor, Sumut • Handbook V5.1</span>
+                                <span id="prev5-sekolah-val" class="font-bold">14 Sekolah Dilayani</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Copyable Prompt Area -->
+                <div class="p-5 border-t border-slate-100 bg-slate-50/50 flex flex-col gap-3">
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Hasil Prompt Generator</span>
+                        <button onclick="copyToClipboard('prompt-area-text')" class="text-xs text-brand-700 hover:text-brand-800 font-bold flex items-center gap-1.5">
+                            <i class="fa-solid fa-copy"></i> Salin Teks
+                        </button>
+                    </div>
+                    <div class="relative">
+                        <textarea id="prompt-area-text" readonly class="w-full h-32 p-4 bg-white border border-slate-200 rounded-2xl text-xs font-mono text-slate-700 focus:outline-none resize-none custom-scrollbar shadow-inner"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Global Action Panel -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <button onclick="copyAllPrompts()" class="py-3 px-4 bg-brand-700 hover:bg-brand-800 text-white rounded-2xl font-bold text-sm transition-all flex items-center justify-center gap-2 shadow-lg shadow-brand-200">
+                    <i class="fa-solid fa-copy"></i> Salin Semua 5 Prompt
+                </button>
+                <button onclick="downloadPrompts()" class="py-3 px-4 bg-slate-800 hover:bg-slate-900 text-white rounded-2xl font-bold text-sm transition-all flex items-center justify-center gap-2 shadow-lg shadow-slate-200">
+                    <i class="fa-solid fa-file-arrow-down"></i> Unduh File Teks (.txt)
+                </button>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Beautiful Custom Modal for Input/Confirmation (No window.alert allowed) -->
+    <div id="custom-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[110] flex items-center justify-center p-4 transition-all duration-300 opacity-0 pointer-events-none">
+        <div class="bg-white rounded-3xl max-w-md w-full border border-slate-100 shadow-2xl p-6 transform scale-95 transition-all duration-300" id="modal-box">
+            <h3 id="modal-title" class="font-extrabold text-lg text-slate-900 mb-2">Judul Modal</h3>
+            <p id="modal-body" class="text-sm text-slate-500 mb-5 leading-relaxed">Deskripsi modal di sini.</p>
+            
+            <div id="modal-input-container" class="hidden mb-5">
+                <input type="text" id="modal-input-field" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 outline-none text-sm font-semibold text-slate-800">
+            </div>
+
+            <div class="flex justify-end gap-2">
+                <button id="modal-cancel-btn" onclick="closeCustomModal()" class="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-600 font-semibold rounded-xl text-xs sm:text-sm transition-all">
+                    Batal
+                </button>
+                <button id="modal-confirm-btn" class="px-5 py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl text-xs sm:text-sm transition-all flex items-center gap-2">
+                    Lanjutkan
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[100] flex flex-col items-center justify-center gap-4 transition-all duration-300 hidden">
+        <div class="w-16 h-16 border-4 border-brand-200 border-t-brand-600 rounded-full animate-spin"></div>
+        <p id="loading-text" class="text-white font-bold text-sm tracking-wide">Menghubungkan...</p>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-slate-900 text-white px-5 py-3 rounded-2xl shadow-xl border border-slate-800 text-sm font-semibold flex items-center gap-3 transform translate-y-10 opacity-0 pointer-events-none transition-all duration-300">
+        <div class="w-6 h-6 rounded-full bg-brand-500 flex items-center justify-center text-white text-xs">
+            <i class="fa-solid fa-check"></i>
+        </div>
+        <span id="toast-message">Teks berhasil disalin ke clipboard!</span>
+    </div>
+
+    <!-- Footer details -->
+    <footer class="bg-white border-t border-slate-100 py-4 mt-8">
+        <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-400 font-medium">
+            GiziPrompt Pro © 2026 • Program Makan Gratis Bergizi • Yayasan Atifa Maju Mandiri • Berstandar 15 Aspek Flyer Efektif
+        </div>
+    </footer>
+
+    <!-- Application Logic Script -->
+    <script>
+        const JSONBLOB_API = 'https://jsonblob.com/api/jsonBlob';
+
+        // Helper function to get today's date formatted in uppercase Indonesian
+        function getFormattedDateToday() {
+            const days = ["MINGGU", "SENIN", "SELASA", "RABU", "KAMIS", "JUMAT", "SABTU"];
+            const months = ["JANUARI", "FEBRUARI", "MARET", "APRIL", "MEI", "JUNI", "JULI", "AGUSTUS", "SEPTEMBER", "OKTOBER", "NOVEMBER", "DESEMBER"];
+            const today = new Date();
+            const dayName = days[today.getDay()];
+            const dateNum = today.getDate();
+            const monthName = months[today.getMonth()];
+            const year = today.getFullYear();
+            return `${dayName} ${dateNum} ${monthName} ${year}`;
+        }
+
+        // Default local fallback configuration
+        const defaultPresets = {
+            bubur_mata_ikan: {
+                header_utama: "MENU MAKAN GRATIS BERGIZI",
+                sub_header: "SPPG PANGKALAN MANSYUR III",
+                nama_yayasan: "YAYASAN ATIFA MAJU MANDIRI",
+                lokasi_distribusi: "Medan Johor, Kota Medan, Sumatera Utara",
+                tanggal_distribusi: "", // Filled automatically on load
+                total_penerima: 1774,
+                sekolah_aktif: true,
+                total_sekolah: 14,
+                nama_menu: "Bubur Mata Ikan Premium",
+                tema_desain: "Masakan Bubur Mata Ikan tradisional. Pola abstrak yang menggabungkan motif biji sagu mutiara (mata ikan), guratan tekstur bubur lembut, dan kombinasi warna krem, kuning keemasan, hijau toska, serta aksen biru navy. Komposisi padat, kaya akan ornamen dekoratif geometris minimalis, kontras tinggi, dan menerapkan grid layout modern tanpa menyisakan ruang kosong besar yang mati.",
+                b2sa_karbo: "Bubur Mata Ikan",
+                manfaat_karbo: "Menyediakan energi instan yang tinggi untuk menunjang aktivitas belajar dan tumbuh kembang fisik anak",
+                b2sa_protein: "Telur Ayam",
+                manfaat_protein: "Sumber asam amino esensial lengkap guna mendukung regenerasi sel, pembentukan otot, dan kognitif otak",
+                b2sa_protein_nabati: "Kacang Merah",
+                manfaat_protein_nabati: "Kaya protein nabati, zat besi, dan serat alami untuk kestabilan metabolisme serta energi berkelanjutan",
+                b2sa_sayur: "Wortel & Sawi Hijau",
+                manfaat_sayur: "Serat makanan alami dan vitamin A yang baik untuk mengoptimalkan penyerapan gizi, metabolisme, serta kesehatan penglihatan mata",
+                b2sa_buah: "Buah Jeruk",
+                manfaat_buah: "Kandungan Vitamin C esensial dosis harian untuk melipatgandakan sistem kekebalan tubuh dari penyakit",
+                susu_aktif: false,
+                b2sa_susu: "Susu Sekolah Kemasan Steril",
+                manfaat_susu: "Kalsium tinggi dan vitamin D untuk mendukung pembentukan serta kekuatan kepadatan tulang dan gigi anak harian",
+                pk_energi: "241.9",
+                pk_protein: "10.4",
+                pk_lemak: "10.3",
+                pk_karbo: "29.3",
+                pk_sayur: "0.3",
+                pb_energi: "315.8",
+                pb_protein: "11",
+                pb_lemak: "11",
+                pb_karbo: "36.6",
+                pb_sayur: "0.5",
+                value_prop: "Gratis Tanpa Biaya • Standar Gizi Nasional • 100% Higienis & Steril",
+                cta_text: "Dapatkan kupon makan distribusi gratis harian langsung melalui SPPG terdekat!",
+                kontak_wa: "WhatsApp: 0812-3456-7890",
+                kontak_ig: "Instagram: @AtifaMajuMandiri",
+                filosofi_menu: "Perpaduan bahan lokal nusantara yang melambangkan kekuatan, kebersamaan erat, dan asupan energi murni untuk melahirkan generasi penerus bangsa yang cerdas, tangguh, dan sehat berprestasi.",
+                detail_foto: "Foto kuliner komersial resolusi tinggi menampilkan sajian utuh menu Bubur Mata Ikan hangat di dalam kompartemen utama ompreng bersekat (divided lunch box) berbahan stainless steel premium yang sangat steril dan mengkilap. Bagian telur ayam rebus terpotong dua secara presisi memperlihatkan kuning telur matang sempurna di sekat lauk utama, kacang merah matang ditabur rapi di atas bubur dengan hiasan garnish daun pandan segar, sayuran wortel dan sawi tersusun rapi di sekat sayur, serta buah jeruk manis segar ranum di sekat samping. Diambil dari sudut pandang datar (flatlay top-down) 45 derajat dengan pencahayaan studio yang cerah, tajam, profesional, dan menonjolkan kelezatan masakan asli harian tanpa distorsi."
+            }
+        };
+
+        // Active Application State
+        let userPresets = { ...defaultPresets };
+        let currentPresetKey = 'bubur_mata_ikan';
+        let cloudKey = '';
+        let isUnsynced = false;
+        let activeTab = 1;
+        let prompts = { 1: '', 2: '', 3: '', 4: '', 5: '' };
+
+        // Custom UI Modal Resolver for Dialog Inputs
+        let modalResolve = null;
+
+        function showCustomModal({ title, body, showInput = false, inputPlaceholder = "", confirmText = "Lanjutkan", cancelText = "Batal", danger = false }) {
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-body').innerText = body;
+            
+            const inputContainer = document.getElementById('modal-input-container');
+            const inputField = document.getElementById('modal-input-field');
+            if (showInput) {
+                inputContainer.classList.remove('hidden');
+                inputField.placeholder = inputPlaceholder;
+                inputField.value = "";
+                inputField.focus();
+            } else {
+                inputContainer.classList.add('hidden');
+            }
+            
+            const confirmBtn = document.getElementById('modal-confirm-btn');
+            confirmBtn.innerText = confirmText;
+            if (danger) {
+                confirmBtn.className = "px-5 py-2.5 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-xl text-xs sm:text-sm transition-all flex items-center gap-2";
+            } else {
+                confirmBtn.className = "px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs sm:text-sm transition-all flex items-center gap-2";
+            }
+            
+            const cancelBtn = document.getElementById('modal-cancel-btn');
+            cancelBtn.innerText = cancelText;
+
+            const modal = document.getElementById('custom-modal');
+            const box = document.getElementById('modal-box');
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            box.classList.remove('scale-95');
+            box.classList.add('scale-100');
+
+            return new Promise((resolve) => {
+                modalResolve = resolve;
+            });
+        }
+
+        function handleModalConfirm() {
+            const isInputVisible = !document.getElementById('modal-input-container').classList.contains('hidden');
+            const inputValue = document.getElementById('modal-input-field').value;
+            
+            closeCustomModal();
+            
+            if (modalResolve) {
+                if (isInputVisible) {
+                    modalResolve(inputValue);
+                } else {
+                    modalResolve(true);
+                }
+            }
+        }
+
+        function closeCustomModal() {
+            const modal = document.getElementById('custom-modal');
+            const box = document.getElementById('modal-box');
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            box.classList.remove('scale-100');
+            box.classList.add('scale-95');
+        }
+
+        document.getElementById('modal-confirm-btn').addEventListener('click', handleModalConfirm);
+
+        // Loading indicator controller
+        function showLoading(show, message = "Memuat...") {
+            const loader = document.getElementById('loading-overlay');
+            const txt = document.getElementById('loading-text');
+            txt.innerText = message;
+            if (show) {
+                loader.classList.remove('hidden');
+            } else {
+                loader.classList.add('hidden');
+            }
+        }
+
+        // Cloud Status & Key Visibility helpers
+        function toggleKeyVisibility() {
+            const input = document.getElementById('cloud-key-input');
+            const icon = document.getElementById('key-visibility-icon');
+            if (input.type === "password") {
+                input.type = "text";
+                icon.className = "fa-solid fa-eye text-xs";
+            } else {
+                input.type = "password";
+                icon.className = "fa-solid fa-eye-slash text-xs";
+            }
+        }
+
+        function copyCloudKey() {
+            if (!cloudKey) {
+                showToast("Key belum terbuat. Sync terlebih dahulu!");
+                return;
+            }
+            const input = document.getElementById('cloud-key-input');
+            input.type = "text";
+            input.select();
+            document.execCommand('copy');
+            input.type = "password";
+            showToast("Cloud Key berhasil disalin!");
+        }
+
+        function updateCloudUI() {
+            const dot = document.getElementById('cloud-status-dot');
+            const text = document.getElementById('cloud-status-text');
+            const keyInput = document.getElementById('cloud-key-input');
+
+            if (cloudKey) {
+                keyInput.value = cloudKey;
+                if (isUnsynced) {
+                    dot.className = "w-2.5 h-2.5 rounded-full bg-amber-500 animate-pulse";
+                    text.innerText = "Perubahan Belum Disinkronkan";
+                } else {
+                    dot.className = "w-2.5 h-2.5 rounded-full bg-emerald-500";
+                    text.innerText = "Tersinkronisasi Dengan Awan";
+                }
+            } else {
+                keyInput.value = "";
+                dot.className = "w-2.5 h-2.5 rounded-full bg-slate-500";
+                text.innerText = "Workspace Lokal (Offline)";
+            }
+        }
+
+        // Cloud Save Handler
+        async function saveWorkspaceToCloud() {
+            showLoading(true, "Sinkronisasi ke Cloud...");
+            const payload = {
+                presets: userPresets,
+                activeKey: currentPresetKey
+            };
+            
+            try {
+                let response;
+                if (cloudKey) {
+                    response = await fetch(`${JSONBLOB_API}/${cloudKey}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify(payload)
+                    });
+                    if (!response.ok) throw new Error("Gagal memperbarui Workspace Cloud.");
+                } else {
+                    response = await fetch(JSONBLOB_API, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify(payload)
+                    });
+                    if (!response.ok) throw new Error("Gagal membuat Workspace Cloud baru.");
+                    
+                    const locationHeader = response.headers.get('Location') || response.headers.get('location');
+                    const xBlobHeader = response.headers.get('x-jsonblob');
+                    if (xBlobHeader) {
+                        cloudKey = xBlobHeader;
+                    } else if (locationHeader) {
+                        cloudKey = locationHeader.split('/').pop();
+                    } else {
+                        const resData = await response.json();
+                        cloudKey = resData.id || resData.blobId;
+                    }
+                }
+                
+                localStorage.setItem('gizi_cloud_key', cloudKey);
+                localStorage.setItem('gizi_presets', JSON.stringify(userPresets));
+                localStorage.setItem('gizi_active_key', currentPresetKey);
+                
+                isUnsynced = false;
+                updateCloudUI();
+                showToast("Workspace Berhasil Disinkronkan!");
+            } catch (error) {
+                console.error(error);
+                showToast("Error Cloud: " + error.message);
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        // Cloud Retrieval / Device Pairing Handler
+        async function connectCloudWorkspacePrompt() {
+            const key = await showCustomModal({
+                title: "Hubungkan Ke Device Lain",
+                body: "Masukkan Cloud Access Key unik Anda untuk menarik semua data preset secara otomatis.",
+                showInput: true,
+                inputPlaceholder: "Contoh: 121516-72bb-11ed...",
+                confirmText: "Muat & Hubungkan"
+            });
+            
+            if (key && typeof key === 'string' && key.trim() !== '') {
+                await loadWorkspaceFromCloud(key.trim());
+            }
+        }
+
+        async function loadWorkspaceFromCloud(key) {
+            if (!key) return;
+            showLoading(true, "Menarik data dari Cloud...");
+            try {
+                const response = await fetch(`${JSONBLOB_API}/${key}`, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+                if (!response.ok) throw new Error("Workspace tidak ditemukan. Periksa kembali Access Key.");
+                const data = await response.json();
+                
+                if (data.presets) {
+                    userPresets = data.presets;
+                    currentPresetKey = data.activeKey || Object.keys(data.presets)[0];
+                    cloudKey = key;
+                    
+                    localStorage.setItem('gizi_cloud_key', cloudKey);
+                    localStorage.setItem('gizi_presets', JSON.stringify(userPresets));
+                    localStorage.setItem('gizi_active_key', currentPresetKey);
+                    
+                    populatePresetDropdown();
+                    loadPreset(currentPresetKey);
+                    
+                    isUnsynced = false;
+                    updateCloudUI();
+                    showToast("Workspace Berhasil Sinkron!");
+                } else {
+                    throw new Error("Format database tidak valid.");
+                }
+            } catch (error) {
+                console.error(error);
+                showToast("Sinkronisasi Gagal: " + error.message);
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        // Manage Preset Dropdown Populations
+        function populatePresetDropdown() {
+            const selector = document.getElementById('preset-selector');
+            selector.innerHTML = "";
+            Object.keys(userPresets).forEach(key => {
+                const opt = document.createElement('option');
+                opt.value = key;
+                opt.innerText = (userPresets[key].nama_menu || "Menu Tanpa Nama") + (key === 'bubur_mata_ikan' ? " (Default)" : "");
+                if (key === currentPresetKey) opt.selected = true;
+                selector.appendChild(opt);
+            });
+        }
+
+        function changePresetEvent(selectedKey) {
+            currentPresetKey = selectedKey;
+            loadPreset(selectedKey);
+            localStorage.setItem('gizi_active_key', currentPresetKey);
+        }
+
+        function saveCurrentPreset() {
+            userPresets[currentPresetKey] = {
+                header_utama: document.getElementById('header_utama').value,
+                sub_header: document.getElementById('sub_header').value,
+                nama_yayasan: document.getElementById('nama_yayasan').value,
+                lokasi_distribusi: document.getElementById('lokasi_distribusi').value,
+                tanggal_distribusi: document.getElementById('tanggal_distribusi').value,
+                total_penerima: parseInt(document.getElementById('total_penerima').value) || 0,
+                sekolah_aktif: document.getElementById('sekolah_aktif').checked,
+                total_sekolah: parseInt(document.getElementById('total_sekolah').value) || 14,
+                nama_menu: document.getElementById('nama_menu').value,
+                tema_desain: document.getElementById('tema_desain').value,
+                b2sa_karbo: document.getElementById('b2sa_karbo').value,
+                manfaat_karbo: document.getElementById('manfaat_karbo').value,
+                b2sa_protein: document.getElementById('b2sa_protein').value,
+                manfaat_protein: document.getElementById('manfaat_protein').value,
+                b2sa_protein_nabati: document.getElementById('b2sa_protein_nabati').value,
+                manfaat_protein_nabati: document.getElementById('manfaat_protein_nabati').value,
+                b2sa_sayur: document.getElementById('b2sa_sayur').value,
+                manfaat_sayur: document.getElementById('manfaat_sayur').value,
+                b2sa_buah: document.getElementById('b2sa_buah').value,
+                manfaat_buah: document.getElementById('manfaat_buah').value,
+                susu_aktif: document.getElementById('susu_aktif').checked,
+                b2sa_susu: document.getElementById('b2sa_susu').value,
+                manfaat_susu: document.getElementById('manfaat_susu').value,
+                pk_energi: document.getElementById('pk_energi').value,
+                pk_protein: document.getElementById('pk_protein').value,
+                pk_lemak: document.getElementById('pk_lemak').value,
+                pk_karbo: document.getElementById('pk_karbo').value,
+                pk_sayur: document.getElementById('pk_sayur').value,
+                pb_energi: document.getElementById('pb_energi').value,
+                pb_protein: document.getElementById('pb_protein').value,
+                pb_lemak: document.getElementById('pb_lemak').value,
+                pb_karbo: document.getElementById('pb_karbo').value,
+                pb_sayur: document.getElementById('pb_sayur').value,
+                value_prop: document.getElementById('value_prop').value,
+                cta_text: document.getElementById('cta_text').value,
+                kontak_wa: document.getElementById('kontak_wa').value,
+                kontak_ig: document.getElementById('kontak_ig').value,
+                filosofi_menu: document.getElementById('filosofi_menu').value,
+                detail_foto: document.getElementById('detail_foto').value
+            };
+            
+            localStorage.setItem('gizi_presets', JSON.stringify(userPresets));
+            isUnsynced = true;
+            updateCloudUI();
+            populatePresetDropdown();
+            showToast("Perubahan berhasil disimpan secara lokal! Lakukan Sync ke Awan.");
+        }
+
+        async function createNewPresetPrompt() {
+            const name = await showCustomModal({
+                title: "Tambah Preset Baru",
+                body: "Masukkan nama atau menu khusus untuk preset baru ini:",
+                showInput: true,
+                inputPlaceholder: "Contoh: Bubur Ketan Hitam & Susu Sekolah"
+            });
+            
+            if (name && typeof name === 'string' && name.trim() !== '') {
+                const cleanKey = 'preset_' + Date.now();
+                userPresets[cleanKey] = {
+                    ...defaultPresets.bubur_mata_ikan,
+                    nama_menu: name.trim(),
+                    tanggal_distribusi: getFormattedDateToday()
+                };
+                currentPresetKey = cleanKey;
+                localStorage.setItem('gizi_presets', JSON.stringify(userPresets));
+                localStorage.setItem('gizi_active_key', currentPresetKey);
+                
+                isUnsynced = true;
+                updateCloudUI();
+                populatePresetDropdown();
+                loadPreset(cleanKey);
+                showToast(`Preset "${name}" berhasil dibuat!`);
+            }
+        }
+
+        async function deleteCurrentPreset() {
+            if (Object.keys(userPresets).length <= 1) {
+                await showCustomModal({
+                    title: "Tidak Dapat Menghapus",
+                    body: "Anda harus mempertahankan minimal satu preset di dalam workspace.",
+                    confirmText: "Mengerti",
+                    cancelText: ""
+                });
+                return;
+            }
+
+            const confirmDelete = await showCustomModal({
+                title: "Hapus Preset?",
+                body: `Apakah Anda yakin ingin menghapus preset "${userPresets[currentPresetKey].nama_menu || 'ini'}"? Tindakan ini tidak dapat dibatalkan secara lokal.`,
+                confirmText: "Hapus Permanen",
+                danger: true
+            });
+
+            if (confirmDelete === true) {
+                delete userPresets[currentPresetKey];
+                currentPresetKey = Object.keys(userPresets)[0];
+                
+                localStorage.setItem('gizi_presets', JSON.stringify(userPresets));
+                localStorage.setItem('gizi_active_key', currentPresetKey);
+                
+                isUnsynced = true;
+                updateCloudUI();
+                populatePresetDropdown();
+                loadPreset(currentPresetKey);
+                showToast("Preset berhasil dihapus.");
+            }
+        }
+
+        // Handle Sekolah optional toggle rendering
+        function toggleSekolah() {
+            const isSekolahActive = document.getElementById('sekolah_aktif').checked;
+            const sekolahFields = document.getElementById('sekolah_fields');
+            const prevSekolahBadge = document.getElementById('prev-sekolah-badge');
+            
+            if (isSekolahActive) {
+                sekolahFields.classList.remove('opacity-40', 'pointer-events-none');
+                if (prevSekolahBadge) prevSekolahBadge.classList.remove('hidden');
+            } else {
+                sekolahFields.classList.add('opacity-40', 'pointer-events-none');
+                if (prevSekolahBadge) prevSekolahBadge.classList.add('hidden');
+            }
+            updatePrompts();
+        }
+
+        // Handle Susu optional toggle rendering
+        function toggleSusu() {
+            const isSusuActive = document.getElementById('susu_aktif').checked;
+            const susuFields = document.getElementById('susu_fields');
+            const prevB2saSusuContainer = document.getElementById('prev-b2sa-susu-container');
+            const prev5B2saSusuContainer = document.getElementById('prev5-b2sa-susu-container');
+            
+            if (isSusuActive) {
+                susuFields.classList.remove('opacity-40', 'pointer-events-none');
+                if (prevB2saSusuContainer) prevB2saSusuContainer.classList.remove('hidden');
+                if (prev5B2saSusuContainer) prev5B2saSusuContainer.classList.remove('hidden');
+            } else {
+                susuFields.classList.add('opacity-40', 'pointer-events-none');
+                if (prevB2saSusuContainer) prevB2saSusuContainer.classList.add('hidden');
+                if (prev5B2saSusuContainer) prev5B2saSusuContainer.classList.add('hidden');
+            }
+            updatePrompts();
+        }
+
+        // Populate inputs with preset values
+        function loadPreset(presetKey) {
+            const data = userPresets[presetKey];
+            if (!data) return;
+
+            Object.keys(data).forEach(id => {
+                const elem = document.getElementById(id);
+                if (elem) {
+                    if (elem.type === 'checkbox') {
+                        elem.checked = data[id];
+                    } else {
+                        elem.value = data[id];
+                    }
+                }
+            });
+
+            toggleSekolah();
+            toggleSusu();
+            updatePrompts();
+        }
+
+        // Empty the form values
+        async function clearForm() {
+            const confirmClear = await showCustomModal({
+                title: "Kosongkan Formulir?",
+                body: "Tindakan ini akan membersihkan semua isian data di kolom kiri.",
+                confirmText: "Kosongkan",
+                danger: true
+            });
+            if (confirmClear === true) {
+                const inputs = document.querySelectorAll('input, textarea');
+                inputs.forEach(input => {
+                    if (input.type === 'checkbox') {
+                        input.checked = false;
+                    } else {
+                        input.value = '';
+                    }
+                });
+                toggleSekolah();
+                toggleSusu();
+                showToast("Formulir berhasil dikosongkan.");
+            }
+        }
+
+        // Switch preview slide tabs
+        function switchTab(tabNum) {
+            activeTab = tabNum;
+            const visualizerContainer = document.getElementById('slide-visual-container');
+            const titleElement = document.getElementById('canvas-aspect-title');
+            
+            for (let i = 1; i <= 5; i++) {
+                const btn = document.getElementById(`tab-btn-${i}`);
+                if (i === tabNum) {
+                    btn.className = "py-3 text-[10px] sm:text-xs font-bold rounded-xl transition-all flex flex-col sm:flex-row items-center justify-center gap-1.5 text-brand-700 bg-brand-50";
+                    btn.querySelector('span').className = "w-5 h-5 bg-brand-600 text-white rounded-full flex items-center justify-center text-[10px]";
+                } else {
+                    btn.className = "py-3 text-[10px] sm:text-xs font-bold rounded-xl transition-all flex flex-col sm:flex-row items-center justify-center gap-1.5 text-slate-500 hover:bg-slate-50";
+                    btn.querySelector('span').className = "w-5 h-5 bg-slate-200 text-slate-600 rounded-full flex items-center justify-center text-[10px]";
+                }
+            }
+
+            if (tabNum === 5) {
+                visualizerContainer.className = "w-full max-w-[290px] aspect-[1/1.414] bg-slate-900 rounded-2xl relative shadow-xl overflow-hidden transition-all duration-300 transform border-4 border-white";
+                titleElement.innerText = "Visualisasi Buku Panduan (A4 Portrait Handbook)";
+            } else {
+                visualizerContainer.className = "w-full max-w-[380px] aspect-square bg-slate-900 rounded-2xl relative shadow-xl overflow-hidden transition-all duration-300 transform border-4 border-white";
+                titleElement.innerText = `Visualisasi Tata Letak Instagram - Slide ${tabNum} (1:1)`;
+            }
+
+            for (let i = 1; i <= 5; i++) {
+                document.getElementById(`visual-slide-${i}`).classList.add('hidden');
+            }
+            document.getElementById(`visual-slide-${tabNum}`).classList.remove('hidden');
+
+            document.getElementById('current-slide-num').innerText = tabNum;
+            document.getElementById('prompt-area-text').value = prompts[tabNum];
+        }
+
+        // Main function to dynamically construct the 5 interconnected prompts (4 Instagram + 1 A4 Handbook)
+        function updatePrompts() {
+            const data = {
+                header_utama: document.getElementById('header_utama').value || '[HEADER UTAMA]',
+                sub_header: document.getElementById('sub_header').value || '[NAMA LEMBAGA]',
+                nama_yayasan: document.getElementById('nama_yayasan').value || '[NAMA YAYASAN]',
+                lokasi_distribusi: document.getElementById('lokasi_distribusi').value || '[LOKASI DISTRIBUSI]',
+                tanggal_distribusi: document.getElementById('tanggal_distribusi').value || '[TANGGAL DISTRIBUSI]',
+                total_penerima: document.getElementById('total_penerima').value || '[TOTAL]',
+                sekolah_aktif: document.getElementById('sekolah_aktif').checked,
+                total_sekolah: document.getElementById('total_sekolah').value || '14',
+                nama_menu: document.getElementById('nama_menu').value || '[NAMA MENU]',
+                tema_desain: document.getElementById('tema_desain').value || '[TEMA DESAIN & WARNA]',
+                b2sa_karbo: document.getElementById('b2sa_karbo').value || '[Karbohidrat]',
+                manfaat_karbo: document.getElementById('manfaat_karbo').value || '[Manfaat]',
+                b2sa_protein: document.getElementById('b2sa_protein').value || '[Protein Hewani]',
+                manfaat_protein: document.getElementById('manfaat_protein').value || '[Manfaat]',
+                b2sa_protein_nabati: document.getElementById('b2sa_protein_nabati').value || '[Protein Nabati]',
+                manfaat_protein_nabati: document.getElementById('manfaat_protein_nabati').value || '[Manfaat]',
+                b2sa_sayur: document.getElementById('b2sa_sayur').value || '[Sayur]',
+                manfaat_sayur: document.getElementById('manfaat_sayur').value || '[Manfaat]',
+                b2sa_buah: document.getElementById('b2sa_buah').value || '[Buah]',
+                manfaat_buah: document.getElementById('manfaat_buah').value || '[Manfaat]',
+                susu_aktif: document.getElementById('susu_aktif').checked,
+                b2sa_susu: document.getElementById('b2sa_susu').value || '[Susu Tambahan]',
+                manfaat_susu: document.getElementById('manfaat_susu').value || '[Manfaat Susu]',
+                pk_energi: document.getElementById('pk_energi').value || '[Energi]',
+                pk_protein: document.getElementById('pk_protein').value || '[Protein]',
+                pk_lemak: document.getElementById('pk_lemak').value || '[Lemak]',
+                pk_karbo: document.getElementById('pk_karbo').value || '[Karbo]',
+                pk_sayur: document.getElementById('pk_sayur').value || '[Sayur]',
+                pb_energi: document.getElementById('pb_energi').value || '[Energi]',
+                pb_protein: document.getElementById('pb_protein').value || '[Protein]',
+                pb_lemak: document.getElementById('pb_lemak').value || '[Lemak]',
+                pb_karbo: document.getElementById('pb_karbo').value || '[Karbo]',
+                pb_sayur: document.getElementById('pb_sayur').value || '[Sayur]',
+                value_prop: document.getElementById('value_prop').value || '[VALUE PROPOSITION]',
+                cta_text: document.getElementById('cta_text').value || '[CALL TO ACTION]',
+                kontak_wa: document.getElementById('kontak_wa').value || '[KONTAK WA]',
+                kontak_ig: document.getElementById('kontak_ig').value || '[KONTAK INSTAGRAM]',
+                filosofi_menu: document.getElementById('filosofi_menu').value || '[FILOSOFI MENU]',
+                detail_foto: document.getElementById('detail_foto').value || '[DETAIL TAMPILAN FOTO MENU ASLI]'
+            };
+
+            // Update UI Previews dynamically based on inputs
+            document.getElementById('prev-header').innerText = data.header_utama;
+            document.getElementById('prev-sub').innerText = data.sub_header;
+            document.getElementById('prev-yayasan').innerText = data.nama_yayasan;
+            document.getElementById('prev-lokasi').innerText = data.lokasi_distribusi;
+            document.getElementById('prev-tanggal').innerText = data.tanggal_distribusi;
+            document.getElementById('prev-total').innerText = data.total_penerima;
+            document.getElementById('prev-value').innerText = data.value_prop;
+            document.getElementById('prev-cta').innerText = data.cta_text;
+
+            if (data.sekolah_aktif) {
+                document.getElementById('prev-sekolah-val').innerText = data.total_sekolah;
+                document.getElementById('prev-sekolah-badge').classList.remove('hidden');
+            } else {
+                document.getElementById('prev-sekolah-badge').classList.add('hidden');
+            }
+
+            // Slide 2 B2SA Preview
+            document.getElementById('prev-b2sa-karbo').innerText = data.b2sa_karbo;
+            document.getElementById('prev-manfaat-karbo').innerText = data.manfaat_karbo;
+            document.getElementById('prev-b2sa-protein').innerText = data.b2sa_protein;
+            document.getElementById('prev-manfaat-protein').innerText = data.manfaat_protein;
+            document.getElementById('prev-b2sa-protein-nabati').innerText = data.b2sa_protein_nabati;
+            document.getElementById('prev-manfaat-protein-nabati').innerText = data.manfaat_protein_nabati;
+            document.getElementById('prev-b2sa-sayur').innerText = data.b2sa_sayur;
+            document.getElementById('prev-manfaat-sayur').innerText = data.manfaat_sayur;
+            document.getElementById('prev-b2sa-buah').innerText = data.b2sa_buah;
+            document.getElementById('prev-manfaat-buah').innerText = data.manfaat_buah;
+
+            if (data.susu_aktif) {
+                document.getElementById('prev-b2sa-susu').innerText = data.b2sa_susu;
+                document.getElementById('prev-manfaat-susu').innerText = data.manfaat_susu;
+            }
+
+            // Nutritional Numbers
+            document.getElementById('prev-pk-energi').innerText = data.pk_energi + ' kkal';
+            document.getElementById('prev-pk-protein').innerText = data.pk_protein + 'g';
+            document.getElementById('prev-pk-lemak').innerText = data.pk_lemak + 'g';
+            document.getElementById('prev-pk-karbo').innerText = data.pk_karbo + 'g';
+            document.getElementById('prev-pk-sayur').innerText = data.pk_sayur + 'g';
+
+            document.getElementById('prev-pb-energi').innerText = data.pb_energi + ' kkal';
+            document.getElementById('prev-pb-protein').innerText = data.pb_protein + 'g';
+            document.getElementById('prev-pb-lemak').innerText = data.pb_lemak + 'g';
+            document.getElementById('prev-pb-karbo').innerText = data.pb_karbo + 'g';
+            document.getElementById('prev-pb-sayur').innerText = data.pb_sayur + 'g';
+
+            document.getElementById('prev-kontak-wa').innerText = data.kontak_wa;
+            document.getElementById('prev-kontak-ig').innerText = data.kontak_ig;
+            document.getElementById('prev-filosofi').innerText = `"${data.filosofi_menu}"`;
+
+            // Slide 4 Visualizer update
+            document.getElementById('prev-slide4-menu').innerText = data.nama_menu;
+            document.getElementById('prev-slide4-protein').innerText = data.b2sa_protein;
+            document.getElementById('prev-slide4-sayur').innerText = data.b2sa_sayur;
+            document.getElementById('prev-slide4-buah').innerText = data.b2sa_buah;
+            document.getElementById('prev-slide4-detail').innerText = `"${data.detail_foto}"`;
+
+            // Handle Milk Visualizer Element Conditionally
+            if (data.susu_aktif) {
+                document.getElementById('prev-slide4-extra-icon').className = "fa-solid fa-bottle-droplet mr-1 text-[8px] text-blue-400";
+                document.getElementById('prev-slide4-extra-text').innerText = data.b2sa_susu;
+            } else {
+                document.getElementById('prev-slide4-extra-icon').className = "fa-solid fa-glass-water mr-1 text-[8px] text-slate-400";
+                document.getElementById('prev-slide4-extra-text').innerText = "Air Mineral Steril";
+            }
+
+            // Update Slide 5 (A4 Handbook) Mockup Visual
+            document.getElementById('prev5-header').innerText = data.header_utama;
+            document.getElementById('prev5-sub').innerText = data.sub_header;
+            document.getElementById('prev5-tanggal').innerText = data.tanggal_distribusi;
+            document.getElementById('prev5-b2sa-karbo').innerText = data.b2sa_karbo;
+            document.getElementById('prev5-b2sa-protein').innerText = data.b2sa_protein;
+            document.getElementById('prev5-b2sa-protein-nabati').innerText = data.b2sa_protein_nabati;
+            document.getElementById('prev5-b2sa-sayur').innerText = data.b2sa_sayur;
+            document.getElementById('prev5-b2sa-buah').innerText = data.b2sa_buah;
+
+            if (data.susu_aktif) {
+                document.getElementById('prev5-b2sa-susu').innerText = data.b2sa_susu;
+            }
+            
+            document.getElementById('prev5-pk-energi').innerText = data.pk_energi;
+            document.getElementById('prev5-pb-energi').innerText = data.pb_energi;
+            document.getElementById('prev5-pk-protein').innerText = data.pk_protein;
+            document.getElementById('prev5-pb-protein').innerText = data.pb_protein;
+            document.getElementById('prev5-pk-lemak').innerText = data.pk_lemak;
+            document.getElementById('prev5-pb-lemak').innerText = data.pb_lemak;
+            document.getElementById('prev5-pk-sayur').innerText = data.pk_sayur;
+            document.getElementById('prev5-pb-sayur').innerText = data.pb_sayur;
+
+            document.getElementById('prev5-value-prop').innerText = data.value_prop;
+            document.getElementById('prev5-menu').innerText = data.nama_menu;
+            document.getElementById('prev5-total').innerText = data.total_penerima;
+            document.getElementById('prev5-yayasan').innerText = data.nama_yayasan;
+            document.getElementById('prev5-filosofi').innerText = `"${data.filosofi_menu}"`;
+            document.getElementById('prev5-cta-val').innerText = data.cta_text;
+            document.getElementById('prev5-wa-val').innerText = data.kontak_wa;
+            document.getElementById('prev5-ig-val').innerText = data.kontak_ig;
+            document.getElementById('prev5-sekolah-val').innerText = data.sekolah_aktif ? `${data.total_sekolah} Sekolah Dilayani` : 'Program Distribusi';
+
+            // Setup optional text inclusions
+            const sekolahText = data.sekolah_aktif ? ` melayani total ${data.total_sekolah} sekolah dasar di wilayah ini harian,` : '';
+            
+            // Conditional Milk text based on susu_aktif
+            const milkPromptS1 = data.susu_aktif ? `, dilengkapi dengan susu kemasan steril: [${data.b2sa_susu}]` : '';
+            const milkPromptS2 = data.susu_aktif ? `; 'Susu Tambahan: [${data.b2sa_susu}]' (Manfaat: ${data.manfaat_susu})` : '';
+            const milkPromptS4 = data.susu_aktif ? `serta satu kotak [${data.b2sa_susu}] diletakkan presisi di sebelah wadah ompreng.` : `serta satu gelas air mineral steril yang higienis diletakkan di sebelah wadah ompreng.`;
+            const milkPromptS5 = data.susu_aktif ? `, 'Susu Tambahan: [${data.b2sa_susu}]' (Manfaat: ${data.manfaat_susu})` : '';
+
+            // Prompt 1: Slide 1 (Header/Identitas/Double Logo)
+            prompts[1] = `Sebuah brosur digital berukuran 1080x1080 piksel (persegi), BAGIAN PERTAMA (ujung kanan menyambung mulus secara visual ke slide kedua) dari sebuah panorama instagram 4-slide kontinu (continuous seamless carousel). Desain memiliki komposisi yang sangat padat, kaya akan elemen grafis mikro yang rapi, menerapkan sistem grid yang seimbang tanpa menyisakan ruang kosong besar yang mati (high white space balance). Latar belakang menampilkan ilustrasi vektor artistik bertema "${data.tema_desain}". Di pojok kiri atas terdapat logo resmi Badan Gizi Nasional berdampingan secara harmonis dengan Logo 81 sebagai identitas program utama. Judul utama (Headline): "${data.header_utama}" terpampang paling besar, dominan, dan tebal (bold) di bagian atas. Di bawah headline, terdapat subheadline: "${data.sub_header}" dan nama yayasan pelaksana: "${data.nama_yayasan}". Informasi lokasi (Where): "${data.lokasi_distribusi}". Informasi tanggal distribusi (When): "${data.tanggal_distribusi}" dan jumlah penerima manfaat: "TOTAL PENERIMA MANFAAT: ${data.total_penerima}" disajikan dalam panel baris horizontal berdesain tegas di bagian bawah.${sekolahText} Di sisi kanan, terdapat hero image berupa foto makro lingkaran beresolusi tinggi menampilkan menu utama: "${data.nama_menu}"${milkPromptS1}. Terdapat value proposition yang tertata rapat di atas kontak: "${data.value_prop}". Kontak: "${data.kontak_wa} | ${data.kontak_ig}". Seluruh teks dalam bahasa Indonesia yang bersih dan rapi, tipografi profesional dengan hierarki informasi yang sangat jelas, fokus tajam, gaya desain vektor 8k, kualitas iklan cetak komersial, tanpa kesalahan ketik. --ar 1:1`;
+
+            // Prompt 2: Slide 2 (B2SA & Nutrisi)
+            prompts[2] = `Sebuah brosur digital berukuran 1080x1080 piksel (persegi), BAGIAN KEDUA (ujung kiri menyambung mulus secara visual ke slide pertama, dan ujung kanan menyambung mulus secara visual ke slide ketiga) dari panorama instagram 4-slide kontinu (continuous seamless carousel). Desain mempertahankan komposisi padat, seimbang, dan mengalir selaras dengan slide pertama. Menggunakan latar belakang ilustrasi vektor bertema "${data.tema_desain}". Di bagian kiri dan tengah, terdapat infografis menarik dengan ikon-ikon kustom sederhana untuk komposisi B2SA yang tersusun rapat: 'Karbohidrat: [${data.b2sa_karbo}]' (Manfaat: ${data.manfaat_karbo}); 'Protein Hewani: [${data.b2sa_protein}]' (Manfaat: ${data.manfaat_protein}); 'Protein Nabati: [${data.b2sa_protein_nabati}]' (Manfaat: ${data.manfaat_protein_nabati}); 'Sayur: [${data.b2sa_sayur}]' (Manfaat: ${data.manfaat_sayur}); 'Buah: [${data.b2sa_buah}]' (Manfaat: ${data.manfaat_buah})${milkPromptS2}. Setiap poin didesain rapat, berbaris rapi (alignment sempurna), dengan visualisasi ikon yang relevan untuk setiap bahan. Di sepanjang sisi bawah, terdapat baris kontak resmi: "${data.kontak_wa} • ${data.kontak_ig}". Di sisi kanan, transisi dari foto menu utama ${data.nama_menu} tampak menyatu mulus secara geometris. Desain vektor 8k, kontras warna tinggi, tipografi tajam, tanpa ruang kosong berlebih, tanpa typo dalam bahasa Indonesia. --ar 1:1`;
+
+            // Prompt 3: Slide 3 (Nilai Gizi & Filosofi)
+            prompts[3] = `Sebuah brosur digital berukuran 1080x1080 piksel (persegi), BAGIAN KETIGA (ujung kiri menyambung mulus secara visual ke slide kedua, dan ujung kanan menyambung mulus secara visual ke slide keempat) dari panorama instagram 4-slide kontinu (continuous seamless carousel). Desain mempertahankan komposisi padat, seimbang, dan dipenuhi ornamen abstrak bertema "${data.tema_desain}" tanpa ruang kosong mati. Gambar ini menyajikan data Nilai Gizi dengan dua tabel visual berstruktur grid rapat and simetris: 'PORSI KECIL' menampilkan data gizi: 'Zat Gizi (Energi: [${data.pk_energi} kkal], Protein: [${data.pk_protein} g], Lemak: [${data.pk_lemak} g], Karbohidrat: [${data.pk_karbo} g], Sayur: [${data.pk_sayur} g])'. Di sampingnya, tabel 'PORSI BESAR' menampilkan data gizi: 'Zat Gizi (Energi: [${data.pb_energi} kkal], Protein: [${data.pb_protein} g], Lemak: [${data.pb_lemak} g], Karbohidrat: [${data.pb_karbo} g], Sayur: [${data.pb_sayur} g])'. Kedua blok ini memiliki pembatas geometris yang tegas dan tipografi modern yang sangat kontras terhadap latar belakang. Di sepanjang sisi bawah kanvas, tercantum filosofi menu: 'Filosofi Menu Hari Ini: ["${data.filosofi_menu}"]'. Kontak: "${data.kontak_ig}". Kualitas desain vektor 8k, tata letak bersih dan tajam, bebas kesalahan ketik dalam bahasa Indonesia. --ar 1:1`;
+
+            // Prompt 4: Slide 4 (Real Photo / Sajian Ompreng)
+            prompts[4] = `Sebuah brosur digital berukuran 1080x1080 piksel (persegi), BAGIAN KEEMPAT DAN TERAKHIR (ujung kiri menyambung mulus secara visual ke slide ketiga) dari panorama instagram 4-slide kontinu (continuous seamless carousel). Desain mempertahankan sedikit aksen ornamen dekoratif bertema "${data.tema_desain}" di sepanjang tepi kiri agar menyambung mulus secara visual. Area tengah hingga kanan didominasi oleh hero image berupa foto makanan studio makro profesional dengan rasio foto terstruktur 4:3. Foto tersebut menampilkan sajian menu "${data.nama_menu}" secara memukau di dalam ompreng stainless steel bersekat sesuai deskripsi: "${data.detail_foto}" ${milkPromptS4} Komposisinya memamerkan warna alami makanan yang cerah dan memicu selera makan, fokus tajam dengan food styling profesional, kebersihan wadah yang steril, serta pencahayaan studio yang merata tanpa bayangan kasar. Terdapat label minimalis di atas bertuliskan "REAL FOOD PHOTOGRAPHY: SAJIAN OMPRENG HARIAN". Di bagian bawah, tertera CTA: "${data.cta_text}" dan saluran kontak: "${data.kontak_wa} | ${data.kontak_ig}". Gaya desain premium 8k, tajam, bebas typo dalam bahasa Indonesia. --ar 1:1`;
+
+            // Prompt 5: Slide 5 (Handbook A4 Page - Portrait Format)
+            prompts[5] = `Sebuah lembar panduan infografis cetak (infographic handbook page) berukuran standar A4 dengan orientasi vertikal (Portrait) untuk buku panduan program (Handbook). Desain memiliki tata letak formal, akademis, terstruktur sangat rapi, dengan warna latar belakang bertema "${data.tema_desain}". Di bagian atas halaman, terdapat header formal dengan logo resmi Badan Gizi Nasional berdampingan secara harmonis dengan Logo 81, diikuti judul besar (Headline): "${data.header_utama}", subheadline: "${data.sub_header}", yayasan pelaksana: "${data.nama_yayasan}", serta tanggal rilis: "${data.tanggal_distribusi}" yang ditata di dalam kotak panel geometris bergaris tegas. Di bawah header, terdapat panel value proposition yang menonjol: "${data.value_prop}". Halaman dibagi menjadi dua kolom utama dengan pembagian grid yang proporsional dan keseimbangan white space yang sangat bersih: Kolom kiri memuat daftar komposisi gizi seimbang B2SA lengkap dengan ikon-ikon kustom yang berjejer rapi: 'Karbohidrat: [${data.b2sa_karbo}]', 'Protein Hewani: [${data.b2sa_protein}]', 'Protein Nabati: [${data.b2sa_protein_nabati}]', 'Sayur: [${data.b2sa_sayur}]', 'Buah: [${data.b2sa_buah}]'${milkPromptS5}, diikuti tabel perbandingan nilai gizi lengkap 'PORSI KECIL' vs 'PORSI BESAR' (menampilkan Energi, Protein, Lemak, Karbohidrat, Sayur) yang bersih dan rapi. Kolom kanan memuat ilustrasi foto berkualitas tinggi menyajikan menu "${data.nama_menu}" di dalam kotak ompreng stainless steel bersekat sesuai deskripsi: "${data.detail_foto}" ${milkPromptS4} Di bagian bawah halaman, terdapat panel horizontal bertuliskan 'Filosofi Menu: "${data.filosofi_menu}"', diikuti Call to Action (CTA) yang sangat jelas: "${data.cta_text}", kontak resmi: "${data.kontak_wa} • ${data.kontak_ig}", serta lokasi penyaluran: "${data.lokasi_distribusi}". Tata letak sangat rapi, bersih, fokus tajam layaknya publikasi cetak profesional, bebas kesalahan ketik dalam bahasa Indonesia. --ar 70:99`;
+
+            // Update active text field
+            document.getElementById('prompt-area-text').value = prompts[activeTab];
+        }
+
+        function copyToClipboard(elementId) {
+            const textarea = document.getElementById(elementId);
+            textarea.select();
+            textarea.setSelectionRange(0, 99999);
+
+            try {
+                document.execCommand('copy');
+                showToast("Teks berhasil disalin!");
+            } catch (err) {
+                showToast("Gagal menyalin teks secara otomatis.");
+            }
+        }
+
+        function copyCurrentPrompt() {
+            copyToClipboard('prompt-area-text');
+        }
+
+        function copyAllPrompts() {
+            const textAll = `=== PROMPT PROGRAM MAKAN BERGIZI BERSTANDAR DESAIN EFEKTIF (4 INSTAGRAM SLIDES & 1 A4 HANDBOOK FLYER) ===\n\n[SLIDE 1 - IDENTITAS CAROUSEL (1:1)]\n${prompts[1]}\n\n[SLIDE 2 - INFOGRAFIS B2SA & MANFAAT (1:1)]\n${prompts[2]}\n\n[SLIDE 3 - NILAI GIZI & FILOSOFI (1:1)]\n${prompts[3]}\n\n[SLIDE 4 - REAL FOTO OMPRENG RASIO 4:3 (1:1)]\n${prompts[4]}\n\n[SLIDE 5 - HANDBOOK FLYER (A4 PORTRAIT - 70:99)]\n${prompts[5]}`;
+            
+            const tempInput = document.createElement("textarea");
+            tempInput.value = textAll;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            tempInput.setSelectionRange(0, 99999);
+            
+            try {
+                document.execCommand('copy');
+                showToast("Semua 5 prompt berhasil disalin!");
+            } catch (err) {
+                showToast("Gagal menyalin.");
+            }
+            document.body.removeChild(tempInput);
+        }
+
+        function downloadPrompts() {
+            const textAll = `=== PROMPT PROGRAM MAKAN BERGIZI BERSTANDAR DESAIN EFEKTIF (4 INSTAGRAM SLIDES & 1 A4 HANDBOOK FLYER) ===\n\n[SLIDE 1 - IDENTITAS CAROUSEL (1:1)]\n${prompts[1]}\n\n[SLIDE 2 - INFOGRAFIS B2SA & MANFAAT (1:1)]\n${prompts[2]}\n\n[SLIDE 3 - NILAI GIZI & FILOSOFI (1:1)]\n${prompts[3]}\n\n[SLIDE 4 - REAL FOTO OMPRENG RASIO 4:3 (1:1)]\n${prompts[4]}\n\n[SLIDE 5 - HANDBOOK FLYER (A4 PORTRAIT - 70:99)]\n${prompts[5]}`;
+            const blob = new Blob([textAll], { type: "text/plain;charset=utf-8" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "prompts_makan_bergizi_carousel_dan_handbook_A4.txt";
+            a.click();
+            URL.revokeObjectURL(url);
+            showToast("File txt berhasil diunduh.");
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-message').innerText = message;
+            
+            toast.classList.remove('opacity-0', 'translate-y-10', 'pointer-events-none');
+            toast.classList.add('opacity-100', 'translate-y-0');
+            
+            setTimeout(() => {
+                toast.classList.remove('opacity-100', 'translate-y-0');
+                toast.classList.add('opacity-0', 'translate-y-10', 'pointer-events-none');
+            }, 3000);
+        }
+
+        // On window startup, set today's automatic date and load stored presets
+        window.onload = async function() {
+            const todayDateString = getFormattedDateToday();
+            defaultPresets.bubur_mata_ikan.tanggal_distribusi = todayDateString;
+            
+            const storedCloudKey = localStorage.getItem('gizi_cloud_key');
+            const storedPresets = localStorage.getItem('gizi_presets');
+            const storedActiveKey = localStorage.getItem('gizi_active_key');
+            
+            if (storedPresets) {
+                try {
+                    userPresets = JSON.parse(storedPresets);
+                    currentPresetKey = storedActiveKey || Object.keys(userPresets)[0];
+                } catch(e) {
+                    userPresets = { ...defaultPresets };
+                    currentPresetKey = 'bubur_mata_ikan';
+                }
+            } else {
+                userPresets = { ...defaultPresets };
+                currentPresetKey = 'bubur_mata_ikan';
+            }
+            
+            if (storedCloudKey) {
+                cloudKey = storedCloudKey;
+                await loadWorkspaceFromCloud(cloudKey);
+            } else {
+                populatePresetDropdown();
+                loadPreset(currentPresetKey);
+                updateCloudUI();
+            }
+        }
+    </script>
+</body>
+</html>
